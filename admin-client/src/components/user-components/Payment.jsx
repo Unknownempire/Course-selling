@@ -218,9 +218,9 @@ function CreditDetails(courseId) {
                         console.log("cardNumber : " + creditNumber);
                         console.log("expiryDate : " + expirydate);
                         console.log("cvv : " + Cvv);
-                        console.log(localStorage.getItem("token"));
-                        console.log(course_detail._id);
-                        console.log('courseId = '+ courseId);
+                        // console.log(localStorage.getItem("token"));
+                        // console.log(course_detail._id);
+                        // console.log('courseId = '+ courseId);
                         try {
                             axios.post(`${BASE_URL}/user/courses/` + courseId.courseId, {
                                 username: name,
