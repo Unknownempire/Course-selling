@@ -2,10 +2,11 @@ import Button from '@mui/material/Button';
 import TextField from "@mui/material/TextField";
 import {Card, Typography} from "@mui/material";
 import {useState} from "react";
+import { BASE_URL } from "../../config.js";
 import axios from "axios";
 import {useNavigate} from "react-router-dom";
 import {useSetRecoilState} from "recoil";
-import {userState} from "../store/atoms/user.js";
+import {userState} from "../../store/atoms/user.js";
 
 function Signin() {
     const [email, setEmail] = useState("")

@@ -1,10 +1,10 @@
 import {Typography} from "@mui/material";
 import Button from "@mui/material/Button";
 import { useNavigate } from "react-router-dom";
-import { isUserLoading } from "../store/selectors/isUserLoading";
+import { isUserLoading } from "../../store/selectors/isUserLoading.js";
 import {useSetRecoilState, useRecoilValue} from "recoil";
-import { userState } from "../store/atoms/user.js";
-import { userEmailState } from "../store/selectors/userEmail"
+import { userState } from "../../store/atoms/user.js";
+import { userEmailState } from "../../store/selectors/userEmail.js"
 
 function Appbar({}) {
     const navigate = useNavigate()
@@ -24,7 +24,7 @@ function Appbar({}) {
             zIndex: 1
         }}>
             <div style={{marginLeft: 10, cursor: "pointer"}} onClick={() => {
-                navigate("/")
+                navigate("/user")
             }}>
                 <Typography variant={"h6"}>Coursera</Typography>
             </div>
@@ -68,7 +68,7 @@ function Appbar({}) {
             zIndex: 1
         }}>
             <div style={{marginLeft: 10, cursor: "pointer"}} onClick={() => {
-                navigate("/")
+                navigate("/user")
             }}>
                 <Typography variant={"h6"}>Coursera</Typography>
             </div>

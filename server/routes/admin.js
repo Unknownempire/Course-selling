@@ -37,7 +37,7 @@ router.post('/signup', (req, res) => {
   });
   
   router.post('/login', async (req, res) => {
-    const { username, password } = req.headers;
+    const { username, password } = req.body;
     const admin = await Admin.findOne({ username, password });
     if (admin) {
       const token = jwt.sign({ username, role: 'admin' }, SECRET, { expiresIn: '1h' });
@@ -49,8 +49,27 @@ router.post('/signup', (req, res) => {
   
   router.post('/courses', authenticateJwt, async (req, res) => {
     const course = new Course(req.body);
-    await course.save();
-    res.json({ message: 'Course created successfully', courseId: course.id });
+    const admin = await Admin.findOne({username: req.user.username});
+    if(admin) {
+      admin.publishedCourses.push(course);
+      await admin.save();
+      await course.save();
+      res.json({message: 'Course published Succesfully'});
+    } else {
+      res.status(403).json({message: 'Admin Not Found'})
+    }
+     
+    res.json({ message: 'Course created successfully'});
+  });
+
+// new changes
+  router.get('/publishedCourses', authenticateJwt, async (req,res) => {
+    const admin = await Admin.findOne({ username: req.user.username }).populate('publishedCourses');
+    if (admin) {
+      res.json({ publishedCourses: admin.publishedCourses || [] });
+    } else {
+      res.status(403).json({ message: 'User not found' });
+    }
   });
   
   router.put('/courses/:courseId', authenticateJwt, async (req, res) => {

@@ -1,19 +1,21 @@
 import { Button, Card, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import {useNavigate} from "react-router-dom";
-import { BASE_URL } from "../config.js";
+import { useRecoilValue } from "recoil";
+import { BASE_URL } from "../../config.js";
+import { isadminState } from "../../store/atoms/isadmin.js";
 import axios from "axios";
 
-function Courses() {
+function PublishedCourses() {
     const [courses, setCourses] = useState([]);
 
     const init = async () => {
-        const response = await axios.get(`${BASE_URL}/admin/courses/`, {
+        const response = await axios.get(`${BASE_URL}/admin/publishedCourses/`, {
             headers: {
                 Authorization: `Bearer ${localStorage.getItem('token')}`
             }
         })
-        setCourses(response.data.courses)
+        setCourses(response.data.publishedCourses)
     }
 
     useEffect(() => {
@@ -48,4 +50,4 @@ export function Course({course}) {
 
 }
 
-export default Courses;
+export default PublishedCourses;

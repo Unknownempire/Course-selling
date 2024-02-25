@@ -1,11 +1,18 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Signin from "./components/Signin.jsx";
-import Signup from "./components/Signup.jsx";
-import Appbar from "./components/Appbar.jsx";
-import AddCourse from "./components/AddCourse.jsx";
-import Courses from "./components/Courses";
-import Course from "./components/Course";
-import {Landing} from "./components/Landing.jsx";
+import Signin from "./components/admin-components/Signin.jsx";
+import Signup from "./components/admin-components/Signup.jsx";
+import Appbar from "./components/admin-components/Appbar.jsx";
+import AddCourse from "./components/admin-components/AddCourse.jsx";
+import Courses from "./components/admin-components/Courses.jsx";
+import Course from "./components/admin-components/Course.jsx";
+import {Landing}from "./components/admin-components/Landing.jsx";
+import PublishedCourses from './components/admin-components/PublishedCourses.jsx';
+import Payment from './components/user-components/Payment.jsx';
+// import UserLanding from "./components/user-components/UserLanding.jsx";
+import UserSignup from "./components/user-components/UserSignup.jsx";
+import UserSignin from "./components/user-components/UserSignin.jsx";
+import UserCourses from "./components/user-components/UserCourses.jsx";
+import {UserLanding} from "./components/user-components/UserLanding.jsx";
 import { userState } from "./store/atoms/user.js";
 import {
     RecoilRoot,
@@ -29,9 +36,17 @@ function App() {
                             <Route path={"/addcourse"} element={<AddCourse />} />
                             <Route path={"/course/:courseId"} element={<Course />} />
                             <Route path={"/courses"} element={<Courses />} />
+                            <Route path={"/publishedcourses"} element={<PublishedCourses />} />
                             <Route path={"/signin"} element={<Signin />} />
                             <Route path={"/signup"} element={<Signup />} />
                             <Route path={"/"} element={<Landing />} />
+                            {/* <Route path={"/addcourse"} element={<AddCourse />} /> */}
+                            {/* <Route path={"/course/:courseId"} element={<Course />} /> */}
+                            <Route path={"/purchasedcourses"} element={<UserCourses />} />
+                            <Route path={"/usersignin"} element={<UserSignin />} />
+                            <Route path={"/usersignup"} element={<UserSignup />} />
+                            <Route path={"/user"} element={<UserLanding />} />
+                            <Route path={"/payment/:courseId"} element={<Payment />} />
                         </Routes>
                     </Router>
             </div>
