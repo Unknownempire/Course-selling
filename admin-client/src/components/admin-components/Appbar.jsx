@@ -133,6 +133,14 @@ function Appbar({ }) {
                     <div style={{ marginRight: 10, display: "flex" }}>
                         <div style={{ marginRight: 10 }}>
                             <Button
+                                // onClick={() => {
+                                //     navigate("/courses")
+                                // }}
+                            >{userEmail}</Button>
+                        </div>
+
+                        <div style={{ marginRight: 10 }}>
+                            <Button
                                 onClick={() => {
                                     navigate("/purchasedcourses")
                                 }}
