@@ -117,6 +117,7 @@ function Payment() {
         })
         console.log({BASE_URL});
     }, []);
+    // console.log('courseid = ' + courseId);
 
     if (courseLoading) {
         return <Loading />
@@ -150,29 +151,18 @@ function GrayTopper() {
 }
 
 function CreditDetails(courseId) {
-    // const [courseDetail, setCourse] = useRecoilState(courseState);
-    // const [title, setTitle] = useState(courseDetail.course.title);
-    // const [description, setDescription] = useState(courseDetail.course.description);
-    // const [image, setImage] = useState(courseDetail.course.imageLink);
-    // const [price, setPrice] = useState(courseDetail.course.price);
-
-    // useEffect(() => {
-    //     setTitle(courseDetail.course.title);
-    //     setDescription(courseDetail.course.description);
-    //     setImage(courseDetail.course.imageLink);
-    //     setPrice(courseDetail.course.price);
-    // },[courseDetail])
+    const [courseDetail, setCourse] = useRecoilState(courseState);
 
     // const course_detail = useRecoilValue(courseDetails)
     const [name, setName] = useState('');
     const [creditNumber, setCreditNumber] = useState('');
     const [expirydate, setExpiryDate] = useState('');
     const [Cvv, setCvv] = useState('');
-    console.log("name : " + name );
-    console.log("cardNumber : " + creditNumber );
-    console.log("expiryDate : " + expirydate );
-    console.log("cvv : " + Cvv );
-    console.log(courseId);
+    // console.log("name : " + name );
+    // console.log("cardNumber : " + creditNumber );
+    // console.log("expiryDate : " + expirydate );
+    // console.log("cvv : " + Cvv );
+    console.log(courseId.courseId); // parsed as an object
 
     return <div style={{display: "flex", justifyContent: "center"}}>
     <Card varint={"outlined"} style={{maxWidth: 600, marginTop: 200}}>
@@ -221,34 +211,34 @@ function CreditDetails(courseId) {
                 label="CVV"
                 variant="outlined"
             />
-            <Button
-                variant="contained"
-                onClick={async () => {
-                    try {
-                    axios.post(`${BASE_URL}/user/courses/` + courseId, {
-                        username: name,
-                        cardNumber: creditNumber,
-                        expiryDate: expirydate,
-                        cvv: Cvv
-                    }, {
-                        headers: {
-                            "Content-type": "application/json",
-                            "Authorization": "Bearer " + localStorage.getItem("token")
-                        }
-                    });
-                    // let updatedCourse = {
-                    //     _id: course_detail._id,
-                    //     title: title,
-                    //     description: description,
-                    //     imageLink: image,
-                    //     price
-                    // };
-                    // setCourse({course: updatedCourse, isLoading: false});
-                } catch(error) {
-                    console.error("Error:", error)
+                <Button
+                    variant="contained"
+                    onClick={async () => {
+                        console.log("name : " + name);
+                        console.log("cardNumber : " + creditNumber);
+                        console.log("expiryDate : " + expirydate);
+                        console.log("cvv : " + Cvv);
+                        console.log(localStorage.getItem("token"));
+                        console.log(course_detail._id);
+                        console.log('courseId = '+ courseId);
+                        try {
+                            axios.post(`${BASE_URL}/user/courses/` + courseId.courseId, {
+                                username: name,
+                                cardNumber: creditNumber,
+                                expiryDate: expirydate,
+                                cvv: Cvv,
+                            }, {
+                                headers: {
+                                    "Content-type": "application/json",
+                                    "Authorization": "Bearer " + localStorage.getItem("token")
+                                }
+                            });
+                        } catch (error) {
+                            console.error("Error:", error)
 
-                }}}
-            > Pay</Button>
+                        }
+                    }}
+                > Pay</Button>
         </div>
     </Card>
 </div>
