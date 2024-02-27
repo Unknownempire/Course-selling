@@ -4,8 +4,6 @@ import Accordion from '@mui/material/Accordion';
 import AccordionActions from '@mui/material/AccordionActions';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
-// import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import Button from '@mui/material/Button';
 
 
 export default function BlockChainContent() {
@@ -31,12 +29,17 @@ export default function BlockChainContent() {
         }
     };
     return (
-        // <Container maxWidth="xl">
+        <>
+        <Container fixed maxWidth='xl'>
         <Box sx={{
             padding: "1rem",
+            width:'70%',
+            // display:'flex',
+            // flexDirection:'column',
+            // justifyContent:'center',
         }}>
-            {renderComponent()};
-            {/* <Page1 /> */}
+            {renderComponent()}
+        </Box>
             <Stack spacing={2} sx={{
                 display: "flex",
                 justifyContent: "center",
@@ -45,15 +48,21 @@ export default function BlockChainContent() {
             }}>
                 <Pagination count={4} color='primary' shape="rounded" page={currentPage} onChange={handleChange} />
             </Stack>
-        </Box>
-        // </Container>
+
+        </Container>
+            </>
     );
 };
 
 function Page1() {
     return (
         <>
-            <Typography variant="h5" paragraph="true">Blockchain technology is one of our time’s most talked-about and revolutionary technologies. It’s the backbone of cryptocurrencies like Bitcoin and Ethereum, but it has the potential to change so much more. Using Blockchain, financial institutions can save up to $12 billion annually. But what exactly is Blockchain, and how does it work? This article will give you the comprehensive guide to Blockchain technology that you need. Let’s get started!
+            <Card sx={{
+                padding:'1rem'
+            }}>
+            <Typography variant="h5" paragraph="true" sx={{
+                fontStyle:'italic',
+            }}>Blockchain technology is one of our time’s most talked-about and revolutionary technologies. It’s the backbone of cryptocurrencies like Bitcoin and Ethereum, but it has the potential to change so much more. Using Blockchain, financial institutions can save up to $12 billion annually. But what exactly is Blockchain, and how does it work? This article will give you the comprehensive guide to Blockchain technology that you need. Let’s get started!
             </Typography>
             <Divider />
             <Typography variant="h4" paragraph="true">What is Blockchain? Definition & Meaning</Typography>
@@ -74,7 +83,7 @@ function Page1() {
                 Additionally, Satoshi Nakamoto developed the principle of distributed Blockchains in 2008. He makes a special improvement to the design that makes it possible to add blocks to the initial chain without needing them to be signed by reliable parties. The updated trees would include a safe record of data transfers. In 2009, Satoshi Nakamoto published the first whitepaper on the subject. He explained in the whitepaper how the decentralized feature of the technology meant that nobody would ever be in charge of anything and that it was, therefore, well suited to enhancing digital trust.
 
             </Typography>
-
+            </Card>
         </>
     )
 
@@ -83,6 +92,9 @@ function Page1() {
 function Page2() {
     return (
         <>
+            <Card sx={{
+                padding:'1rem'
+            }}>
             <Typography variant="h5" paragraph="true">BlockChain Technology Real-Life Use Cases
             </Typography>
             <Box sx={{
@@ -141,50 +153,152 @@ function Page2() {
             <Typography >
                 The term “hybrid Blockchain” is frequently used to describe a system that combines both public and private Blockchains. It combines key elements from both private and public Blockchains. Blockchain hybrid architecture is completely programmable. Members of the hybrid Blockchain can determine which transactions are made public and who is allowed to use the Blockchain. In such Blockchains, transactions can be made public for verification purposes but are often not made accessible to everyone. One of the initiatives that use both public and private Blockchains is XDC.
             </Typography>
+            </Card>
         </>
     )
 
 }
 function Page3() {
     return (
-        <>
+        <div>
+            <Card sx={{
+                padding:'1rem'
+            }}>
             <Typography variant="h4" paragraph="true">How to Build a Blockchain?
             </Typography>
             <Typography paragraph="true">Building a Blockchain requires an in-depth understanding of the programming languages & libraries required to develop protocols and smart contracts. Some languages like python, js, and node are prerequisites to becoming a full-stack Blockchain developer before starting any course or certification in the market. Blockchain Council courses cover all of that for beginners. For instance, Check this python code for creating a basic Blockchain:
             </Typography>
-            <Card>
-                <pre className="code-block">
+            <Card sx={{
+                width:'fit-content',
+                margin:'1rem',
+                border: '0.5px solid #1565c0',
+            }}>
+                <pre className="code-block" style={{
+                    padding:'1rem',
+                }}>
                     <code>
                         import hashlib{"\n"}
                         import json{"\n\n"}
                         class Block:{"\n"}
-                        def __init__(self, index, timestamp, data, previous_hash):{"\n"}
+                        &nbsp;&nbsp;&nbsp;&nbsp;def __init__(self, index, timestamp, data, previous_hash):{"\n"}
+                        &nbsp;&nbsp;&nbsp;&nbsp;self.index = index{"\n"}
+                        &nbsp;&nbsp;&nbsp;&nbsp;self.timestamp = timestamp{"\n"}
+                        &nbsp;&nbsp;&nbsp;&nbsp;self.data = data{"\n"}
+                        &nbsp;&nbsp;&nbsp;&nbsp;self.previous_hash = previous_hash{"\n"}
+                        &nbsp;&nbsp;&nbsp;&nbsp;self.hash = self.hash_block(){"\n"}
+
+                        def hash_block(self):{"\n"}
+                        &nbsp;&nbsp;&nbsp;&nbsp;sha = hashlib.sha256(){"\n"}
+                        &nbsp;&nbsp;&nbsp;&nbsp;sha.update(str(self.index) +{"\n"}
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;str(self.timestamp) +{"\n"}
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;str(self.data) +{"\n"}
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;str(self.previous_hash)){"\n"}
+                        &nbsp;&nbsp;&nbsp;&nbsp;return sha.hexdigest(){"\n\n"}
+
+                        class Blockchain:{"\n"}
+                        &nbsp;&nbsp;&nbsp;&nbsp;def __init__(self):{"\n"}
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;self.chain = [self.create_genesis_block()]{"\n\n"}
+
+                        &nbsp;&nbsp;&nbsp;&nbsp;def create_genesis_block(self):{"\n"}
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return Block(0, "01/01/2018", "Genesis Block", "0"){"\n\n"}
+
+                        &nbsp;&nbsp;&nbsp;&nbsp;def get_latest_block(self):{"\n"}
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return self.chain[-1]{"\n\n"}
+
+                        &nbsp;&nbsp;&nbsp;&nbsp;def add_block(self, new_block):{"\n"}
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;new_block.previous_hash = self.get_latest_block().hash{"\n"}
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;new_block.hash = new_block.hash_block(){"\n"}
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;self.chain.append(new_block){"\n\n"}
+
+                        &nbsp;&nbsp;&nbsp;&nbsp;def is_chain_valid(self):{"\n"}
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for i in range(1, len(self.chain)):
+
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;current_block = self.chain[i]{"\n"}
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;previous_block = self.chain[i-1]{"\n"}
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if current_block.hash != current_block.hash_block():{"\n"}
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return False{"\n"}
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if current_block.previous_hash != previous_block.hash:{"\n"}
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return False{"\n"}
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return True{"\n\n"}
+
+                        blockchain = Blockchain(){"\n"}
+                        blockchain.add_block(Block(1, "20/07/2022", &#123;"amount": 4 &#125;)){"\n"}
+                        blockchain.add_block(Block(2, "20/07/2022", &#123;"amount": 8 &#125;)){"\n\n"}
+
+                        print(json.dumps(blockchain.__dict__, indent=4)){"\n"}
+                        print("Is blockchain valid? " + str(blockchain.is_chain_valid())){"\n"}
 
                     </code>
                 </pre>
+
             </Card>
-            <Typography variant='h4' paragraph="true">Blockchain Definition for Beginners</Typography>
-            <Typography  >A Blockchain is a distributed ledger. It records transactions on numerous computers all over the world. These are registered in a way that prevents further change of them. Blockchain development is the process of building a shared, immutable distributed ledger technology (DLT) that safely records transactions and tracks assets inside a network, whether those assets are actual, like money or real estate, or nonphysical, like copyrights.
+            <Card sx={{
+                width:'fit-content',
+                margin:'1rem',
+                border: '0.5px solid #1565c0'
+            }}>
+                <pre className="code-block" style={{
+                    padding:'1rem',
+                }}>
+                    <code>
+                        pragma solidity ^0.8.0;{"\n\n"}
+                        contract DAO {"\n"}
+                        &nbsp;&nbsp;&nbsp;&nbsp;address public owner;{"\n"}
+        {/* &nbsp;&nbsp;&nbsp;&nbsp;mapping(address => bool) public members;{"\n"} */}
+                        &nbsp;&nbsp;&nbsp;&nbsp;event MemberAdded(address member);{"\n"}
+                        &nbsp;&nbsp;&nbsp;&nbsp;event MemberRemoved(address member);{"\n\n"}
+
+                        &nbsp;&nbsp;&nbsp;&nbsp;constructor() public {"\n"}
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;owner = msg.sender;{"\n"}
+                        &nbsp;&nbsp;&nbsp;&nbsp;{"\n"}
+
+                        &nbsp;&nbsp;&nbsp;&nbsp;function addMember(address member) public {"\n"}
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;require(msg.sender == owner, "Only owner can add members.");{"\n"}
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;members[member] = true;{"\n"}
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;emit MemberAdded(member);{"\n"}
+                        &nbsp;&nbsp;&nbsp;&nbsp;{"\n"}
+
+                        &nbsp;&nbsp;&nbsp;&nbsp;function removeMember(address member) public {"\n"}
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;require(msg.sender == owner, "Only owner can remove members.");{"\n"}
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;delete members[member];{"\n"}
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;emit MemberRemoved(member);{"\n"}
+                        &nbsp;&nbsp;&nbsp;&nbsp;{"\n"}
+
+                        &nbsp;&nbsp;&nbsp;&nbsp;function isMember(address member) public view returns (bool) {"\n"}
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return members[member];{"\n"}
+                        &nbsp;&nbsp;&nbsp;&nbsp;{"\n"}
+                        {"}"}
+                    </code>
+                </pre>
+
+            </Card>
+            <Typography  paragraph='true'>These codes are just for understanding how different creating a smart contract on Solidity is from other famous programming language. Blockchain Council’s Interactive-Live Training help you understand and develop these skills with live trainers & provides networking opportunities with like-minded people. Click here to learn more.
             </Typography>
-        </>
-    )
+            </Card>
+        </div>
+    );
 
 }
 function Page4() {
     return (
         <>
-            <Typography variant="h5" paragraph="true">Blockchain technology is one of our time’s most talked-about and revolutionary technologies. It’s the backbone of cryptocurrencies like Bitcoin and Ethereum, but it has the potential to change so much more. Using Blockchain, financial institutions can save up to $12 billion annually. But what exactly is Blockchain, and how does it work? This article will give you the comprehensive guide to Blockchain technology that you need. Let’s get started!
+        <Card sx={{
+            padding:'1rem'
+        }}>
+            <Typography variant="h4" paragraph="true">BlockChain Future
+            </Typography>
+            <Typography paragraph="true">The Blockchain industry will be worth $163.83 billion by 2029. It is expected to come with a compound annual growth rate of 56.3%. So we can say the future of Blockchain is looking pretty exciting! With the technology still in its early stages, there are a lot of possibilities for where it could go.
+            </Typography>
+            <Typography variant='h4' paragraph="true">Future Possibilties
+            </Typography>
+            <Typography paragraph="true">Bitcoin and other cryptocurrencies are inextricably linked to Blockchain technology. Cryptocurrency alone will not be enough to propel Blockchain to its full potential. Blockchain, in addition to providing a foundation for immutable ledgers, has several marketable career opportunities. Any industry or organization that is involved in the recording and oversight of any type of transaction stands to benefit from shifting its operations to a Blockchain-based platform.</Typography>
+            <Typography paragraph="true">Imagine you and your friends have a secret club. Now, you want to keep track of all the fun things you do together. You could use a regular notebook to write it all down, but what if one of your friends loses it or someone else finds it and changes what’s written? That’s where Blockchain comes in! It’s like a special notebook that you can all write in, but once something is written, it can’t be erased or changed. And, instead of keeping it in one place, it’s kept in many different places, so all your friends can see what’s written. It’s like a secret club diary that everyone can see and trust!
             </Typography>
             <Divider />
-            <Typography variant="h4" paragraph="true">What is Blockchain? Definition & Meaning</Typography>
-            <Typography paragraph="true">Imagine a digital ledger that records transactions. But it is not stored in one central location. Instead, it’s spread out across a network of computers. This means that the information stored on the ledger is decentralized and can’t be controlled by any single entity. This decentralized digital ledger is known as Blockchain.
+            <Typography variant='h4'>Conclusion</Typography>
+            <Typography paragraph='true'>Since its inception in 2008, Blockchain technology has come a long way. It has evolved from a simple solution for digital currency transactions to a powerful tool with the potential to disrupt industries and change the way we live, work, and conduct business. However, the journey is still ongoing as we continue to test the limits of what Blockchain can do. The potential of this technology is limitless, from improving supply chain management to revolutionizing the way we think about digital identity. Overall, Blockchain technology is a game-changer that has the potential to shape the future in ways we can’t even imagine. It’s an exciting time to be a part of this emerging industry, and we can’t wait to see what the future holds for Blockchain.
             </Typography>
-            <Typography variant='h4' paragraph="true">Blockchain Definition for Kids</Typography>
-            <Typography  >Imagine you and your friends have a secret club. Now, you want to keep track of all the fun things you do together. You could use a regular notebook to write it all down, but what if one of your friends loses it or someone else finds it and changes what’s written? That’s where Blockchain comes in! It’s like a special notebook that you can all write in, but once something is written, it can’t be erased or changed. And, instead of keeping it in one place, it’s kept in many different places, so all your friends can see what’s written. It’s like a secret club diary that everyone can see and trust!
-            </Typography>
-            <Typography variant='h4' paragraph="true">Blockchain Definition for Beginners</Typography>
-            <Typography  >A Blockchain is a distributed ledger. It records transactions on numerous computers all over the world. These are registered in a way that prevents further change of them. Blockchain development is the process of building a shared, immutable distributed ledger technology (DLT) that safely records transactions and tracks assets inside a network, whether those assets are actual, like money or real estate, or nonphysical, like copyrights.
-            </Typography>
+            </Card>
         </>
     )
 
