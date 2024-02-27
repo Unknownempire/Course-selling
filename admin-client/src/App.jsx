@@ -8,6 +8,7 @@ import Course from "./components/admin-components/Course.jsx";
 import {Landing}from "./components/admin-components/Landing.jsx";
 import PublishedCourses from './components/admin-components/PublishedCourses.jsx';
 import Payment from './components/user-components/Payment.jsx';
+// import BlockChainRoutes from './components/Routes/BlockChainRoutes/BlockChainRoutes.jsx';
 // import UserLanding from "./components/user-components/UserLanding.jsx";
 import UserSignup from "./components/user-components/UserSignup.jsx";
 import UserSignin from "./components/user-components/UserSignin.jsx";
@@ -21,7 +22,7 @@ import {
 import axios from "axios";
 import {BASE_URL} from "./config.js";
 import {useEffect} from "react";
-
+import BlockChainContent from './components/Courses-components/BlockChain/BlockChainContent.jsx';
 function App() {
     return (
         <RecoilRoot>
@@ -47,6 +48,8 @@ function App() {
                             <Route path={"/usersignup"} element={<UserSignup />} />
                             <Route path={"/user"} element={<UserLanding />} />
                             <Route path={"/payment/:courseId"} element={<Payment />} />
+                            {/* <BlockChainRoutes/> */}
+                            <Route path={"/course/BlockChainBeginner"} element={<BlockChainContent />} />
                         </Routes>
                     </Router>
             </div>
