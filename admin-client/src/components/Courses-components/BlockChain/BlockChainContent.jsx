@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Box, Container, Divider, Typography, Stack, Pagination} from "@mui/material";
+import { Box, Container, Divider, Typography, Stack, Pagination, Card, Tab} from "@mui/material";
 import Accordion from '@mui/material/Accordion';
 import AccordionActions from '@mui/material/AccordionActions';
 import AccordionSummary from '@mui/material/AccordionSummary';
@@ -126,17 +126,20 @@ function Page2() {
                     </AccordionDetails>
                 </Accordion>
             </Box>
-            <Typography variant="h5" paragraph="true">Types of BlockChain
-            </Typography>
             <Divider />
-            <Typography variant="h4" paragraph="true">What is Blockchain? Definition & Meaning</Typography>
-            <Typography paragraph="true">Imagine a digital ledger that records transactions. But it is not stored in one central location. Instead, it’s spread out across a network of computers. This means that the information stored on the ledger is decentralized and can’t be controlled by any single entity. This decentralized digital ledger is known as Blockchain.
+            <Typography variant="h4" paragraph="true" sx={{
+                fontWeight:'630'
+            }}>Types of BlockChain
             </Typography>
-            <Typography variant='h4' paragraph="true">Blockchain Definition for Kids</Typography>
-            <Typography  >Imagine you and your friends have a secret club. Now, you want to keep track of all the fun things you do together. You could use a regular notebook to write it all down, but what if one of your friends loses it or someone else finds it and changes what’s written? That’s where Blockchain comes in! It’s like a special notebook that you can all write in, but once something is written, it can’t be erased or changed. And, instead of keeping it in one place, it’s kept in many different places, so all your friends can see what’s written. It’s like a secret club diary that everyone can see and trust!
+            <Typography variant="h5" paragraph="true">Public BlockChain</Typography>
+            <Typography paragraph="true">A distributed ledger system without restrictions, and permissions is known as a public Blockchain. It makes the system transparent and trustless by allowing anybody to join the network and validate transactions. Such Blockchains are primarily used for cryptocurrency exchange and mining. The Bitcoin Blockchain, the most well-known example of a public Blockchain, uses a proof-of-work consensus process to confirm transactions and add them to the Blockchain.
             </Typography>
-            <Typography variant='h4' paragraph="true">Blockchain Definition for Beginners</Typography>
-            <Typography  >A Blockchain is a distributed ledger. It records transactions on numerous computers all over the world. These are registered in a way that prevents further change of them. Blockchain development is the process of building a shared, immutable distributed ledger technology (DLT) that safely records transactions and tracks assets inside a network, whether those assets are actual, like money or real estate, or nonphysical, like copyrights.
+            <Typography variant='h5' paragraph="true">Consortium Blockchain</Typography>
+            <Typography  paragraph='true'>A private Blockchain that is owned and run by a number of different companies is referred to as a consortium Blockchain, sometimes known as a federated Blockchain. In this type, more than one organization is involved in providing access to pre-selected nodes for reading, writing, and auditing the Blockchain, or we might say that more than one central authority is in control. The creation of a consortium Blockchain aims to make it easier for a collection of complementary Blockchains to work together. A particular kind of semi-decentralized network is a consortium Blockchain. An example of a consortium Blockchain is IBM Food Trust.
+            </Typography>
+            <Typography variant='h5' paragraph="true">Hybrid Blockchain</Typography>
+            <Typography >
+                The term “hybrid Blockchain” is frequently used to describe a system that combines both public and private Blockchains. It combines key elements from both private and public Blockchains. Blockchain hybrid architecture is completely programmable. Members of the hybrid Blockchain can determine which transactions are made public and who is allowed to use the Blockchain. In such Blockchains, transactions can be made public for verification purposes but are often not made accessible to everyone. One of the initiatives that use both public and private Blockchains is XDC.
             </Typography>
         </>
     )
@@ -145,15 +148,21 @@ function Page2() {
 function Page3() {
     return (
         <>
-            <Typography variant="h5" paragraph="true">Blockchain technology is one of our time’s most talked-about and revolutionary technologies. It’s the backbone of cryptocurrencies like Bitcoin and Ethereum, but it has the potential to change so much more. Using Blockchain, financial institutions can save up to $12 billion annually. But what exactly is Blockchain, and how does it work? This article will give you the comprehensive guide to Blockchain technology that you need. Let’s get started!
+            <Typography variant="h4" paragraph="true">How to Build a Blockchain?
             </Typography>
-            <Divider />
-            <Typography variant="h4" paragraph="true">What is Blockchain? Definition & Meaning</Typography>
-            <Typography paragraph="true">Imagine a digital ledger that records transactions. But it is not stored in one central location. Instead, it’s spread out across a network of computers. This means that the information stored on the ledger is decentralized and can’t be controlled by any single entity. This decentralized digital ledger is known as Blockchain.
+            <Typography paragraph="true">Building a Blockchain requires an in-depth understanding of the programming languages & libraries required to develop protocols and smart contracts. Some languages like python, js, and node are prerequisites to becoming a full-stack Blockchain developer before starting any course or certification in the market. Blockchain Council courses cover all of that for beginners. For instance, Check this python code for creating a basic Blockchain:
             </Typography>
-            <Typography variant='h4' paragraph="true">Blockchain Definition for Kids</Typography>
-            <Typography  >Imagine you and your friends have a secret club. Now, you want to keep track of all the fun things you do together. You could use a regular notebook to write it all down, but what if one of your friends loses it or someone else finds it and changes what’s written? That’s where Blockchain comes in! It’s like a special notebook that you can all write in, but once something is written, it can’t be erased or changed. And, instead of keeping it in one place, it’s kept in many different places, so all your friends can see what’s written. It’s like a secret club diary that everyone can see and trust!
-            </Typography>
+            <Card>
+                <pre className="code-block">
+                    <code>
+                        import hashlib{"\n"}
+                        import json{"\n\n"}
+                        class Block:{"\n"}
+                        def __init__(self, index, timestamp, data, previous_hash):{"\n"}
+
+                    </code>
+                </pre>
+            </Card>
             <Typography variant='h4' paragraph="true">Blockchain Definition for Beginners</Typography>
             <Typography  >A Blockchain is a distributed ledger. It records transactions on numerous computers all over the world. These are registered in a way that prevents further change of them. Blockchain development is the process of building a shared, immutable distributed ledger technology (DLT) that safely records transactions and tracks assets inside a network, whether those assets are actual, like money or real estate, or nonphysical, like copyrights.
             </Typography>
