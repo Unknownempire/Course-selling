@@ -28,35 +28,58 @@ export default function BlockChainContent() {
                 return null;
         }
     };
+
     return (
-        <>
-        <Container fixed maxWidth='xl'>
+        <div style={{
+            margin:'0',
+            padding:'0',
+            // border:'2px solid green',
+            maxWidth:'100vw',
+            display: 'flex'
+        }}>
+        <Container fixed maxWidth='xl' sx={{
+            // border:"2px solid purple",
+            width:'70%',
+            display:'flex',
+            justifyContent:'center',
+            alignItems:'center'
+        }}>
         <Box sx={{
             padding: "1rem",
             width:'70%',
+            // border:'2px solid red',
             // display:'flex',
             // flexDirection:'column',
             // justifyContent:'center',
         }}>
             {renderComponent()}
         </Box>
-            <Stack spacing={2} sx={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
+            {/* <Stack spacing={2} sx={{
+                // display: "flex",
+                // justifyContent: "center",
+                // alignItems: "center",
                 padding: '1rem',
+                marginTop:'2rem',
+                border:'2px solid yellow'
 
-            }}>
+            }}> */}
                 <Pagination count={4} color='primary' shape="rounded" page={currentPage} onChange={handleChange} style={{
                     position:'fixed',
                     bottom:'0.5rem',
                     backdropFilter: 'blur(2px)',
-                    padding: '2px',
+                    padding: '3px',
+                    // border: '2px solid yellow',
                 }}/>
-            </Stack>
+            {/* </Stack> */}
 
-        </Container>
-            </>
+            </Container>
+            <div style={{
+                position:'fixed',
+                right:'1rem',
+            }}>
+                <ContentTable setCurrentPage={setCurrentPage}/>
+            </div>
+        </div>
     );
 };
 
@@ -106,10 +129,17 @@ function Page2() {
             <Typography variant="h5" paragraph="true">BlockChain Technology Real-Life Use Cases
             </Typography>
             <Box sx={{
-                paddingTop:"1rem",
-                paddingBottom:"1rem",
+                marginTop:"1rem",
+                marginBottom:"1rem",
+                // border: '2px solid blue',
+                // borderRadius:'7px',
             }}>
-                <Accordion>
+                    <Accordion sx={{
+                        marginBottom: '4px',
+                        // border: '1px solid blue',
+                        border: '1px solid #1565c0',
+                        borderRadius: '6px',
+                    }}>
                     <AccordionSummary
                         // expandIcon={<ExpandMoreIcon/>}
                         aria-controls="panel1-content"
@@ -120,8 +150,12 @@ function Page2() {
                     <AccordionDetails>
                         <Typography>Supply chains are becoming more transparent and traceable thanks to Blockchain technology. Walmart Canada, for instance, used Blockchain to develop an automated system for controlling payments to and invoices from its 70 third-party freight providers. The company currently uses a Blockchain-based system to track the origin of over 25 products from 5 different suppliers. This aids the business in ensuring food safety and enhancing client confidence.</Typography>
                     </AccordionDetails>
-                </Accordion>
-                <Accordion>
+                </Accordion >
+                <Accordion sx={{
+                        marginBottom: '4px',
+                        border: '1px solid #1565c0',
+                        borderRadius: '6px',
+                }}>
                     <AccordionSummary
                         // expandIcon={<ExpandMoreIcon />}
                         aria-controls="panel2-content"
@@ -133,7 +167,10 @@ function Page2() {
                         <Typography>Supply chains are becoming more transparent and traceable thanks to Blockchain technology. Walmart Canada, for instance, used Blockchain to develop an automated system for controlling payments to and invoices from its 70 third-party freight providers. The company currently uses a Blockchain-based system to track the origin of over 25 products from 5 different suppliers. This aids the business in ensuring food safety and enhancing client confidence.</Typography>
                     </AccordionDetails>
                 </Accordion>
-                <Accordion>
+                <Accordion sx={{
+                        border: '1px solid #1565c0',
+                        borderRadius: '6px',
+                }}>
                     <AccordionSummary
                         // expandIcon={<ExpandMoreIcon />}
                         aria-controls="panel2-content"
@@ -310,4 +347,39 @@ function Page4() {
         </>
     )
 
+}
+
+function ContentTable({setCurrentPage}) {
+    return (
+        <div>
+            <aside>
+                <Container fixed maxWidth="md">
+                <Card sx={{
+                    padding:'1rem',
+                }}>
+                    <Typography variant='h5' sx={{
+                        marginBottom:'1rem',
+                        textDecoration:'underline'
+                    }} >Table of Content</Typography>
+                    <Typography paragraph='true' sx={{
+                        cursor:'pointer',
+                        textDecoration:'underline'
+                    }} onClick={() => setCurrentPage(1)}>Definition</Typography>
+                    <Typography paragraph='true' sx={{
+                        cursor:'pointer',
+                        textDecoration:'underline'
+                    }} onClick={() => setCurrentPage(2)}>Examples</Typography>
+                    <Typography paragraph='true' sx={{
+                        cursor:'pointer',
+                        textDecoration:'underline'
+                    }} onClick={() => setCurrentPage(3)}>Code</Typography>
+                    <Typography paragraph='true' sx={{
+                        cursor:'pointer',
+                        textDecoration:'underline'
+                    }} onClick={() => setCurrentPage(4)}>Future</Typography>
+                </Card>
+                </Container>
+            </aside>
+        </div>
+    );
 }
