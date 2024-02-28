@@ -45,8 +45,14 @@ export default function BlockChainContent() {
                 justifyContent: "center",
                 alignItems: "center",
                 padding: '1rem',
+
             }}>
-                <Pagination count={4} color='primary' shape="rounded" page={currentPage} onChange={handleChange} />
+                <Pagination count={4} color='primary' shape="rounded" page={currentPage} onChange={handleChange} style={{
+                    position:'fixed',
+                    bottom:'0.5rem',
+                    backdropFilter: 'blur(2px)',
+                    padding: '2px',
+                }}/>
             </Stack>
 
         </Container>
@@ -62,6 +68,8 @@ function Page1() {
             }}>
             <Typography variant="h5" paragraph="true" sx={{
                 fontStyle:'italic',
+                // color:'#1565c0',
+                color:'#1b86ff'
             }}>Blockchain technology is one of our time’s most talked-about and revolutionary technologies. It’s the backbone of cryptocurrencies like Bitcoin and Ethereum, but it has the potential to change so much more. Using Blockchain, financial institutions can save up to $12 billion annually. But what exactly is Blockchain, and how does it work? This article will give you the comprehensive guide to Blockchain technology that you need. Let’s get started!
             </Typography>
             <Divider />
@@ -103,7 +111,7 @@ function Page2() {
             }}>
                 <Accordion>
                     <AccordionSummary
-                        expandIcon=""
+                        // expandIcon={<ExpandMoreIcon/>}
                         aria-controls="panel1-content"
                         id="panel1-header"
                     >
