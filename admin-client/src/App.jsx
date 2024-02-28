@@ -26,7 +26,7 @@ import BlockChainContent from './components/Courses-components/BlockChain/BlockC
 function App() {
     return (
         <RecoilRoot>
-            <div style={{width: "100vw",
+            <div style={{width: "100%",
                 height: "100vh",
                 backgroundColor: "#eeeeee"}}
             >
