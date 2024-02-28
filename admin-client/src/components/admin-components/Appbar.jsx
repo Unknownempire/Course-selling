@@ -34,12 +34,14 @@ function Appbar({ }) {
                 display: "flex",
                 justifyContent: "space-between",
                 padding: 4,
-                zIndex: 1
+                zIndex: 1,
+                // borderBottom: '0.3px solid black',
+                // background:'#b4dbff',
             }}>
                 <div style={{ marginLeft: 10, cursor: "pointer" }} onClick={() => {
                     navigate("/")
                 }}>
-                    <Typography variant={"h6"}>Coursera</Typography>
+                    <Typography variant={"h6"}>SkillSpot</Typography>
                 </div>
 
                 <div style={{ display: "flex" }}>
@@ -87,12 +89,17 @@ function Appbar({ }) {
                 display: "flex",
                 justifyContent: "space-between",
                 padding: 4,
-                zIndex: 1
+                zIndex: 1,
+                // borderBottom: '0.3px solid #a7a7a7',
+                // background:'#b4dbff',
+                // background:'#dbedff'
             }}>
                 <div style={{ marginLeft: 10, cursor: "pointer" }} onClick={() => {
                     navigate("/")
                 }}>
-                    <Typography variant={"h6"}>Coursera</Typography>
+                    <Typography variant={"h6"} sx={{
+                        fontWeight:'550',
+                    }}>SkillSpot</Typography>
                 </div>
 
                 <div style={{ display: "flex" }}>
@@ -121,12 +128,15 @@ function Appbar({ }) {
                 display: "flex",
                 justifyContent: "space-between",
                 padding: 4,
-                zIndex: 1
+                zIndex: 1,
+                // borderBottom: '0.3px solid black',
+                // background:'#b4dbff',
+
             }}>
                 <div style={{ marginLeft: 10, cursor: "pointer" }} onClick={() => {
                     navigate("/user")
                 }}>
-                    <Typography variant={"h6"}>Coursera</Typography>
+                    <Typography variant={"h6"}>SkillSpot</Typography>
                 </div>
 
                 <div style={{ display: "flex" }}>
@@ -174,12 +184,14 @@ function Appbar({ }) {
                 display: "flex",
                 justifyContent: "space-between",
                 padding: 4,
-                zIndex: 1
+                zIndex: 1,
+                // borderBottom: '0.3px solid black',
+                // background:'#b4dbff',
             }}>
                 <div style={{ marginLeft: 10, cursor: "pointer" }} onClick={() => {
                     navigate("/user")
                 }}>
-                    <Typography variant={"h6"}>Coursera</Typography>
+                    <Typography variant={"h6"}>SkillSpot</Typography>
                 </div>
 
                 <div style={{ display: "flex" }}>
