@@ -32,6 +32,32 @@ function Courses() {
 export function Course({course}) {
     const navigate = useNavigate();
     const isAdmin = useRecoilValue(isadminState);
+    const [purchasedCourses,setPurchasedCourses] = useState([])
+    let purchased = 'purchase'
+
+    if(!isAdmin) {
+        const init = async () => {
+            const response = await axios.get(`${BASE_URL}/user/purchasedCourses/`, {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem('token')}`
+                }
+            })
+            // console.log(response.data.purchasedCourses);
+
+            setPurchasedCourses(response.data.purchasedCourses);
+        }
+        for (let i = 0; i < purchasedCourses.length; ++i) {
+            if (purchasedCourses[i]._id === course._id) {
+                purchased = 'purchased'
+            }
+        }
+
+        useEffect(() => {
+            init();
+        }, []);
+
+    }
+
 
     // if(isAdmin) {
     //     console.log('We are the Admin');
@@ -61,21 +87,12 @@ export function Course({course}) {
              ) : (
                 <Button variant="contained" size="large" onClick={async() => {
                     const courseId = course._id;
-                    // console.log(courseId);
-                    // try {
-                    //     // console.log('Sending Request')
-                    //     await axios.post(`${BASE_URL}/user/courses/` + courseId, {}, {
-                    //         headers: {
-                    //             "Content-type": "application/json",
-                    //             "Authorization": "Bearer " + localStorage.getItem("token")
-                    //         }
-                    //     });
-                    //     alert("Course Purchased!");
-                    // } catch (error) {
-                    //     console.error("Error occurred while purchasing course:", error);
-                    // }
-                    navigate("/payment/" + courseId);
-                }}>Purchase</Button>
+                        if (purchased === 'purchase') {
+                            navigate("/payment/" + courseId);
+                        } else {
+                            alert('Course Already Purchased')
+                        }
+                }}>{purchased}</Button>
             )}
         </div>
     </Card>
