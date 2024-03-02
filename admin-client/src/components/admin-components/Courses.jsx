@@ -68,13 +68,42 @@ export function Course({course}) {
     return <Card style={{
         margin: 10,
         width: 300,
-        minHeight: 200,
-        padding: 20
+        // minHeight: 200,
+        height: 400,
+        padding: 20,
+        position: 'relative'
     }}>
         <Typography textAlign={"center"} variant="h5">{course.title}</Typography>
         <Typography textAlign={"center"} variant="subtitle1">{course.description}</Typography>
-        <img src={course.imageLink} style={{width: 300}} ></img>
-        <div style={{display: "flex", justifyContent: "center", marginTop: 20}}>
+        <div style={{
+            display:'flex',
+            justifyContent:'center',
+            alignItems:'center',
+            // border:'2px solid red',
+            padding:20,
+        }}>
+        <img src={course.imageLink} style={{
+            width: 300,
+            height: 200,
+            marginBottom: '20px',
+        }} ></img>
+        </div>
+        <div style={{
+            // border:'2px solid red',
+            // marginTop:'auto',
+            // alignSelf:'flex-start'
+            // paddingTop: 20, // Adjust spacing from the bottom
+            position: 'absolute',
+            bottom: 10, // Adjust as needed
+            left: 0,
+            right: 0,
+            textAlign: 'center'
+        }}>
+        <div style={{
+            display: "flex",
+            justifyContent: "center",
+            marginTop: 20,
+        }}>
             {/* <Button variant="contained" size="large" onClick={() => {
                 navigate("/course/" + course._id);
             }}>Edit</Button> */}
@@ -85,15 +114,25 @@ export function Course({course}) {
                     alert("Contents Coming Soon..")
                 }}>View</Button>
              ) : (
-                <Button variant="contained" size="large" onClick={async() => {
-                    const courseId = course._id;
-                        if (purchased === 'purchase') {
+                    purchased === 'purchase' ? (
+                        <Button variant="contained" size="large" onClick={async () => {
+                            const courseId = course._id;
                             navigate("/payment/" + courseId);
-                        } else {
-                            alert('Course Already Purchased')
-                        }
-                }}>{purchased}</Button>
-            )}
+                        }}>Purchase</Button>
+                    ) : (
+                        <Button variant="contained" color="success" size="large" onClick={async() => {
+                            const response = await axios.get(`${BASE_URL}/user/learn/` + String(course._id), {
+                                headers: {
+                                    Authorization: `Bearer ${localStorage.getItem('token')}`
+                                }
+                            })
+                            const route = response.data.message
+                            alert('route ' + route);
+                            navigate("/course/" + route);
+                        }}>View</Button>
+                    )
+                )}
+        </div>
         </div>
     </Card>
 
