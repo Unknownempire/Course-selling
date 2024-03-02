@@ -98,4 +98,21 @@ router.post('/payment',authenticateJwt, async(req,res) => {
 
 })
 
+router.get('/learn/:courseId',authenticateJwt, async(req,res) => {
+  const course = await Course.findOne({_id: req.params.courseId});
+  const temp_route = course.title;
+  // console.log(temp_route);
+  let route = '';
+  for(let i = 0; i < temp_route.length; ++i) {
+    if(temp_route[i] !== ' ') {
+      route += temp_route[i];
+    }
+  }
+  console.log(route);
+  if(!course) {
+    res.status(404).json({message: 'course not found'})
+  }
+  res.json({ message: route });
+})
+
 module.exports = router
