@@ -49,7 +49,8 @@ function App() {
                             <Route path={"/user"} element={<UserLanding />} />
                             <Route path={"/payment/:courseId"} element={<Payment />} />
                             {/* <BlockChainRoutes/> */}
-                            <Route path={"/course/BlockChainBeginner"} element={<BlockChainContent />} />
+                            {/* <Route path={"/course/BlockChain%20for%20Beginner"} element={<BlockChainContent />} /> */}
+                            <Route path={"/course/BlockChainforBeginner"} element={<BlockChainContent />} />
                         </Routes>
                     </Router>
             </div>
