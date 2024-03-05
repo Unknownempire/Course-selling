@@ -15,6 +15,9 @@ import UserSignin from "./components/user-components/UserSignin.jsx";
 import UserCourses from "./components/user-components/UserCourses.jsx";
 import {UserLanding} from "./components/user-components/UserLanding.jsx";
 import { userState } from "./store/atoms/user.js";
+//Content
+import BlockChainContent from './components/Courses-components/BlockChain/BlockChainContent.jsx';
+import VueContent from './components/Courses-components/Vue/VueContent.jsx'
 import {
     RecoilRoot,
     useSetRecoilState
@@ -22,7 +25,6 @@ import {
 import axios from "axios";
 import {BASE_URL} from "./config.js";
 import {useEffect} from "react";
-import BlockChainContent from './components/Courses-components/BlockChain/BlockChainContent.jsx';
 function App() {
     return (
         <RecoilRoot>
@@ -51,6 +53,7 @@ function App() {
                             {/* <BlockChainRoutes/> */}
                             {/* <Route path={"/course/BlockChain%20for%20Beginner"} element={<BlockChainContent />} /> */}
                             <Route path={"/course/BlockChainforBeginner"} element={<BlockChainContent />} />
+                            <Route path={"/course/Vue"} element={<VueContent />} />
                         </Routes>
                     </Router>
             </div>
