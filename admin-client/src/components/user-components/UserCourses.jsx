@@ -55,9 +55,18 @@ export function Course({course}) {
         }} ></img>
         </div>
         <div style={{display: "flex", justifyContent: "center", marginTop: 20}}>
-            <Button variant="contained" size="large" color="success" onClick={() => {
-                navigate("/course/" + 'BlockChainBeginner');
-                // alert('No video available');
+            <Button variant="contained" size="large" color="success" onClick={async() => {
+                // navigate("/course/" + 'BlockChainBeginner');
+                console.log(course._id);
+                const response = await axios.get(`${BASE_URL}/user/learn/` + String(course._id), {
+                    headers: {
+                        Authorization: `Bearer ${localStorage.getItem('token')}`
+                    }
+                })
+                console.log(localStorage.getItem('token'));
+                const route = response.data.message
+                alert('route ' + route);
+                navigate("/course/" + route);
             }}>Learn</Button>
         </div>
     </Card>
