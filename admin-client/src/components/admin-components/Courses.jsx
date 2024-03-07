@@ -127,7 +127,7 @@ export function Course({course}) {
                                 }
                             })
                             const route = response.data.message
-                            alert('route ' + route);
+                            // alert('route ' + route);
                             navigate("/course/" + route);
                         }}>View</Button>
                     )
