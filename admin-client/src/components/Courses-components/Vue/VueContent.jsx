@@ -63,7 +63,7 @@ export default function VueContent() {
                 border:'2px solid yellow'
 
             }}> */}
-                <Pagination count={4} color='primary' shape="rounded" page={currentPage} onChange={handleChange} style={{
+                <Pagination count={4} color='success' shape="rounded" page={currentPage} onChange={handleChange} style={{
                     position:'fixed',
                     bottom:'0.5rem',
                     backdropFilter: 'blur(2px)',
@@ -101,7 +101,7 @@ function Page1() {
             <Typography variant="h5" paragraph="true" sx={{
                 fontStyle:'italic',
                 // color:'#1565c0',
-                color:'#1b86ff',
+                // color:'#1b86ff',
                 color: '#40b27f'
                 }}>Vue.js is a frontend framework that is optimized for progressive integration. That means you can have a large app with only a couple Vue components integrated -- or you could start from scratch and work completely within the Vue ecosystem.
                     Another thing that sets Vue apart is the lower learning curve compared to a lot of frameworks. Instead of having to understand complex topics, if you know HTML, CSS, and JavaScript, you're already pretty close!
@@ -176,7 +176,8 @@ function Page2() {
                     <Accordion sx={{
                         marginBottom: '4px',
                         // border: '1px solid blue',
-                        border: '1px solid #1565c0',
+                        // border: '1px solid #1565c0',
+                        border: '1px solid #42b883',
                         borderRadius: '6px',
                     }}>
                     <AccordionSummary
@@ -194,7 +195,7 @@ function Page2() {
                 </Accordion >
                 <Accordion sx={{
                         marginBottom: '4px',
-                        border: '1px solid #1565c0',
+                        border: '1px solid #42b883',
                         borderRadius: '6px',
                 }}>
                     <AccordionSummary
@@ -211,7 +212,7 @@ function Page2() {
                     </AccordionDetails>
                 </Accordion>
                 <Accordion sx={{
-                        border: '1px solid #1565c0',
+                        border: '1px solid #42b883',
                         marginBottom: '4px',
                         borderRadius: '6px',
                 }}>
@@ -227,7 +228,8 @@ function Page2() {
                     </AccordionDetails>
                 </Accordion>
                 <Accordion sx={{
-                        border: '1px solid #1565c0',
+                        // border: '1px solid #1565c0',
+                        border: '1px solid #42b883',
                         borderRadius: '6px',
                 }}>
                     <AccordionSummary
@@ -555,24 +557,46 @@ function ContentTable({setCurrentPage}) {
                 }}>
                     <Typography variant='h5' sx={{
                         marginBottom:'1rem',
-                        textDecoration:'underline'
+                        textDecoration:'underline',
+                            borderRadius:'0.2rem',
+                            paddingLeft: '0.3rem',
                     }} >Table of Content</Typography>
                     <Typography paragraph='true' sx={{
                         cursor:'pointer',
-                        textDecoration:'underline'
-                    }} onClick={() => setCurrentPage(1)}>About Vuejs</Typography>
+                        textDecoration:'underline',
+                            borderRadius:'0.2rem',
+                            paddingLeft: '0.3rem',
+                    }} onClick={() => setCurrentPage(1)}
+                            onMouseEnter={(e) => e.target.style.backgroundColor = '#93d4b7'}
+                            onMouseLeave={(e) => e.target.style.backgroundColor = ''}
+                    >About Vuejs</Typography>
                     <Typography paragraph='true' sx={{
                         cursor:'pointer',
-                        textDecoration:'underline'
-                    }} onClick={() => setCurrentPage(2)}>React vs Vue</Typography>
+                        textDecoration:'underline',
+                            borderRadius:'0.2rem',
+                            paddingLeft: '0.3rem',
+                    }} onClick={() => setCurrentPage(2)}
+                            onMouseEnter={(e) => e.target.style.backgroundColor = '#93d4b7'}
+                            onMouseLeave={(e) => e.target.style.backgroundColor = ''}
+                    >Vue V/S Other Frameworks</Typography>
                     <Typography paragraph='true' sx={{
                         cursor:'pointer',
-                        textDecoration:'underline'
-                    }} onClick={() => setCurrentPage(3)}>VueJs Environment Setup</Typography>
+                        textDecoration:'underline',
+                            borderRadius:'0.2rem',
+                            paddingLeft: '0.3rem',
+                    }} onClick={() => setCurrentPage(3)}
+                            onMouseEnter={(e) => e.target.style.backgroundColor = '#93d4b7'}
+                            onMouseLeave={(e) => e.target.style.backgroundColor = ''}
+                    >VueJs Environment Setup</Typography>
                     <Typography paragraph='true' sx={{
                         cursor:'pointer',
-                        textDecoration:'underline'
-                    }} onClick={() => setCurrentPage(4)}>VueJs-Introduction</Typography>
+                        textDecoration:'underline',
+                            borderRadius:'0.2rem',
+                            paddingLeft: '0.3rem',
+                    }} onClick={() => setCurrentPage(4)}
+                            onMouseEnter={(e) => e.target.style.backgroundColor = '#93d4b7'}
+                            onMouseLeave={(e) => e.target.style.backgroundColor = ''}
+                    >VueJs-Introduction</Typography>
                 </Card>
                 </Container>
             </aside>
