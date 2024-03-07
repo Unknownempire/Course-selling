@@ -18,6 +18,7 @@ import { userState } from "./store/atoms/user.js";
 //Content
 import BlockChainContent from './components/Courses-components/BlockChain/BlockChainContent.jsx';
 import VueContent from './components/Courses-components/Vue/VueContent.jsx'
+import FrontendEndDevContent from './components/Courses-components/FrontendDev/FrontendDevContent.jsx';
 import {
     RecoilRoot,
     useSetRecoilState
@@ -54,6 +55,7 @@ function App() {
                             {/* <Route path={"/course/BlockChain%20for%20Beginner"} element={<BlockChainContent />} /> */}
                             <Route path={"/course/BlockChainforBeginner"} element={<BlockChainContent />} />
                             <Route path={"/course/Vue"} element={<VueContent />} />
+                            <Route path={"/course/FrontendDev"} element={<FrontendEndDevContent />} />
                         </Routes>
                     </Router>
             </div>
