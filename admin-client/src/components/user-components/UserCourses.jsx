@@ -63,9 +63,19 @@ export function Course({course}) {
                         Authorization: `Bearer ${localStorage.getItem('token')}`
                     }
                 })
-                console.log(localStorage.getItem('token'));
+                // console.log(localStorage.getItem('token'));
                 const route = response.data.message
-                alert('route ' + route);
+                // alert('route ' + route);
+                localStorage.setItem('courseid', course._id);
+                // const courseId = localStorage.getItem('courseid');
+                // const resAttempt = await axios.get(`${BASE_URL}/user/learn/${courseId}/attempt`, {
+                //     headers: {
+                //         Authorization: `Bearer ${localStorage.getItem('token')}`
+                //     }
+                // });
+
+                // console.log(resAttempt);
+                
                 navigate("/course/" + route);
             }}>Learn</Button>
         </div>
