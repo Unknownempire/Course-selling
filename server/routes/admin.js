@@ -54,9 +54,11 @@ router.post('/signup', (req, res) => {
       admin.publishedCourses.push(course);
       await admin.save();
       await course.save();
-      res.json({message: 'Course published Succesfully'});
+      // res.json({message: 'Course published Succesfully'});
     } else {
       res.status(403).json({message: 'Admin Not Found'})
+      console.log('admin not found');
+      return;
     }
      
     res.json({ message: 'Course created successfully'});
