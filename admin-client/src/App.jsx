@@ -8,6 +8,7 @@ import Course from "./components/admin-components/Course.jsx";
 import {Landing}from "./components/admin-components/Landing.jsx";
 import PublishedCourses from './components/admin-components/PublishedCourses.jsx';
 import Payment from './components/user-components/Payment.jsx';
+import TestPayment from './components/user-components/TestPayment.jsx';
 // import BlockChainRoutes from './components/Routes/BlockChainRoutes/BlockChainRoutes.jsx';
 // import UserLanding from "./components/user-components/UserLanding.jsx";
 import UserSignup from "./components/user-components/UserSignup.jsx";
@@ -19,6 +20,12 @@ import { userState } from "./store/atoms/user.js";
 import BlockChainContent from './components/Courses-components/BlockChain/BlockChainContent.jsx';
 import VueContent from './components/Courses-components/Vue/VueContent.jsx'
 import FrontendEndDevContent from './components/Courses-components/FrontendDev/FrontendDevContent.jsx';
+
+//Test
+import FrontendTestPage from './components/Courses-components/FrontendDev/FrontendTest.jsx';
+import VueTestPage from './components/Courses-components/Vue/VueTest.jsx';
+import BlockChainTestPage from './components/Courses-components/BlockChain/BlockchainTest.jsx';
+
 import {
     RecoilRoot,
     useSetRecoilState
@@ -51,11 +58,19 @@ function App() {
                             <Route path={"/usersignup"} element={<UserSignup />} />
                             <Route path={"/user"} element={<UserLanding />} />
                             <Route path={"/payment/:courseId"} element={<Payment />} />
+                            {/* Test Repayment */}
+                            <Route path={"/repayment/:courseId"} element={<TestPayment />} />
+
                             {/* <BlockChainRoutes/> */}
                             {/* <Route path={"/course/BlockChain%20for%20Beginner"} element={<BlockChainContent />} /> */}
                             <Route path={"/course/BlockChainforBeginner"} element={<BlockChainContent />} />
                             <Route path={"/course/Vue"} element={<VueContent />} />
                             <Route path={"/course/FrontendDev"} element={<FrontendEndDevContent />} />
+                            {/* Test */}
+                            <Route path={"/course/FrontendDev/Test"} element={<FrontendTestPage />} />
+                            <Route path={"/course/Vue/Test"} element={<VueTestPage />} />
+                            <Route path={"/course/BlockChainforBeginner/Test"} element={<BlockChainTestPage />} />
+
                         </Routes>
                     </Router>
             </div>
