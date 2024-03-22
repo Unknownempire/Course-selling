@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
 import { Box, Container, Divider, Typography, Stack, Pagination, Card, Tab} from "@mui/material";
+import { useNavigate } from 'react-router-dom';
 import Accordion from '@mui/material/Accordion';
 import AccordionActions from '@mui/material/AccordionActions';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
+import { BASE_URL } from '../../../config.js';
+import axios from 'axios';
 
 
 export default function VueContent() {
@@ -548,6 +551,7 @@ This is just a basic example showing the linking of VueJS with DOM, and how we c
 }
 
 function ContentTable({setCurrentPage}) {
+    const navigate = useNavigate();
     return (
         <div>
             <aside>
@@ -567,8 +571,14 @@ function ContentTable({setCurrentPage}) {
                             borderRadius:'0.2rem',
                             paddingLeft: '0.3rem',
                     }} onClick={() => setCurrentPage(1)}
-                            onMouseEnter={(e) => e.target.style.backgroundColor = '#93d4b7'}
-                            onMouseLeave={(e) => e.target.style.backgroundColor = ''}
+                            onMouseEnter={(e) => {
+                                e.target.style.backgroundColor = '#93d4b7';
+                                e.target.style.boxShadow = '0 0 5px rgba(0, 0, 0, 0.3)';
+                            }}
+                            onMouseLeave={(e) => {
+                                e.target.style.backgroundColor = '';
+                                e.target.style.boxShadow = '';
+                            }}
                     >About Vuejs</Typography>
                     <Typography paragraph='true' sx={{
                         cursor:'pointer',
@@ -576,8 +586,14 @@ function ContentTable({setCurrentPage}) {
                             borderRadius:'0.2rem',
                             paddingLeft: '0.3rem',
                     }} onClick={() => setCurrentPage(2)}
-                            onMouseEnter={(e) => e.target.style.backgroundColor = '#93d4b7'}
-                            onMouseLeave={(e) => e.target.style.backgroundColor = ''}
+                            onMouseEnter={(e) => {
+                                e.target.style.backgroundColor = '#93d4b7';
+                                e.target.style.boxShadow = '0 0 5px rgba(0, 0, 0, 0.3)';
+                            }}
+                            onMouseLeave={(e) => {
+                                e.target.style.backgroundColor = '';
+                                e.target.style.boxShadow = '';
+                            }}
                     >Vue V/S Other Frameworks</Typography>
                     <Typography paragraph='true' sx={{
                         cursor:'pointer',
@@ -585,8 +601,14 @@ function ContentTable({setCurrentPage}) {
                             borderRadius:'0.2rem',
                             paddingLeft: '0.3rem',
                     }} onClick={() => setCurrentPage(3)}
-                            onMouseEnter={(e) => e.target.style.backgroundColor = '#93d4b7'}
-                            onMouseLeave={(e) => e.target.style.backgroundColor = ''}
+                            onMouseEnter={(e) => {
+                                e.target.style.backgroundColor = '#93d4b7';
+                                e.target.style.boxShadow = '0 0 5px rgba(0, 0, 0, 0.3)';
+                            }}
+                            onMouseLeave={(e) => {
+                                e.target.style.backgroundColor = '';
+                                e.target.style.boxShadow = '';
+                            }}
                     >VueJs Environment Setup</Typography>
                     <Typography paragraph='true' sx={{
                         cursor:'pointer',
@@ -594,9 +616,53 @@ function ContentTable({setCurrentPage}) {
                             borderRadius:'0.2rem',
                             paddingLeft: '0.3rem',
                     }} onClick={() => setCurrentPage(4)}
-                            onMouseEnter={(e) => e.target.style.backgroundColor = '#93d4b7'}
-                            onMouseLeave={(e) => e.target.style.backgroundColor = ''}
+                            // onMouseEnter={(e) => e.target.style.backgroundColor = ''}
+                            // onMouseLeave={(e) => e.target.style.backgroundColor = ''}
+                            onMouseEnter={(e) => {
+                                e.target.style.backgroundColor = '#93d4b7';
+                                e.target.style.boxShadow = '0 0 5px rgba(0, 0, 0, 0.3)';
+                            }}
+                            onMouseLeave={(e) => {
+                                e.target.style.backgroundColor = '';
+                                e.target.style.boxShadow = '';
+                            }}
                     >VueJs-Introduction</Typography>
+                    <Typography paragraph='true' sx={{
+                        cursor:'pointer',
+                        textDecoration:'underline',
+                            borderRadius:'0.2rem',
+                            paddingLeft: '0.3rem',
+                    }} onClick={async() => {
+                        const result = window.confirm('Do you want to attempt the test');
+                        if (result === true) {
+                            navigate("Test");
+                        } 
+                        // if (result === true) {
+                        //     const courseId = localStorage.getItem('courseid');
+                        //     const resAttempt = await axios.get(`${BASE_URL}/user/submit/${courseId}/attempt`, {
+                        //         headers: {
+                        //             Authorization: `Bearer ${localStorage.getItem('token')}`
+                        //         }
+                        //     });
+
+                        //     if (resAttempt.data.attemptNumber > 0) {
+                        //         alert("Test already attempted..Pay to attempt again");
+                        //     } else {
+                        //         navigate("Test");
+                        //     }
+                        // } 
+                    }}
+                            // onMouseEnter={(e) => e.target.style.backgroundColor = ''}
+                            // onMouseLeave={(e) => e.target.style.backgroundColor = ''}
+                            onMouseEnter={(e) => {
+                                e.target.style.backgroundColor = '#93d4b7';
+                                e.target.style.boxShadow = '0 0 5px rgba(0, 0, 0, 0.3)';
+                            }}
+                            onMouseLeave={(e) => {
+                                e.target.style.backgroundColor = '';
+                                e.target.style.boxShadow = '';
+                            }}
+                    >Test</Typography>
                 </Card>
                 </Container>
             </aside>

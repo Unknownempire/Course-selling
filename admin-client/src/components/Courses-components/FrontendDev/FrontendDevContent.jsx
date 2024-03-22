@@ -1,10 +1,14 @@
 import React, { useState } from 'react';
 import { Box, Container, Divider, Typography, Stack, Pagination, Card, Tab, List, ListItem, ListItemText } from "@mui/material";
 import { Grid, Paper } from "@mui/material";
-import Accordion from '@mui/material/Accordion';
-import AccordionActions from '@mui/material/AccordionActions';
-import AccordionSummary from '@mui/material/AccordionSummary';
-import AccordionDetails from '@mui/material/AccordionDetails';
+// import TestPage from './FrontendTest';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import { BASE_URL } from '../../../config';
+// import Accordion from '@mui/material/Accordion';
+// import AccordionActions from '@mui/material/AccordionActions';
+// import AccordionSummary from '@mui/material/AccordionSummary';
+// import AccordionDetails from '@mui/material/AccordionDetails';
 
 
 export default function FrontendEndDevContent() {
@@ -24,7 +28,6 @@ export default function FrontendEndDevContent() {
                 return <Page3 />;
             case 4:
                 return <Page4 />;
-
             default:
                 return null;
         }
@@ -451,7 +454,7 @@ function Page3() {
                             textAlign: 'center',
                             lineHeight: '200px',
                             marginBottom: '20px',
-                            transition: 'transform 0.3s', // Add transition for smooth animation
+                            transition: 'transform 0.5s', // Add transition for smooth animation
                             margin: '1rem',
                             // cursor: 'pointer' // Change cursor to indicate interactivity
                         }}
@@ -459,7 +462,7 @@ function Page3() {
                             onMouseLeave={(e) => e.target.style.transform = 'rotate(0deg)'}> {/* Rotate back to 0 degrees on mouse leave */}
                             Hover over me
                         </div>
-                        <div style={{ width: 200, height: 200, backgroundColor: '#007bff', color: '#fff', textAlign: 'center', lineHeight: '200px', marginBottom: '20px', transition: 'border-radius 0.3s', margin: '1rem' }}
+                        <div style={{ width: 200, height: 200, backgroundColor: '#007bff', color: '#fff', textAlign: 'center', lineHeight: '200px', marginBottom: '20px', transition: 'border-radius 0.5s', margin: '1rem' }}
                             onMouseEnter={(e) => e.target.style.borderRadius = '1rem'}
                             onMouseLeave={(e) => e.target.style.borderRadius = '0rem'}>
                             Hover over me
@@ -596,6 +599,7 @@ function Page4() {
 }
 
 function ContentTable({ setCurrentPage }) {
+    const navigate = useNavigate();
     return (
         <div style={{ marginTop: '1rem' }}>
             <aside>
@@ -616,8 +620,14 @@ function ContentTable({ setCurrentPage }) {
                             paddingLeft: '0.3rem',
                         }} onClick={() => setCurrentPage(1)}
                             // onMouseEnter={(e) => e.target.style.backgroundColor = '#ff984a'}
-                            onMouseEnter={(e) => e.target.style.backgroundColor = 'rgb(86, 153, 219)'}
-                            onMouseLeave={(e) => e.target.style.backgroundColor = ''}
+                            onMouseEnter={(e) => {
+                                e.target.style.backgroundColor = 'rgb(86, 153, 219)';
+                                e.target.style.boxShadow = '0 0 5px rgba(0, 0, 0, 0.3)';
+                            }}
+                            onMouseLeave={(e) => {
+                                e.target.style.backgroundColor = '';
+                                e.target.style.boxShadow = '';
+                            }}
                         >How To</Typography>
                         <Typography paragraph='true' sx={{
                             cursor: 'pointer',
@@ -625,8 +635,14 @@ function ContentTable({ setCurrentPage }) {
                             borderRadius: '0.2rem',
                             paddingLeft: '0.3rem',
                         }} onClick={() => setCurrentPage(2)}
-                            onMouseEnter={(e) => e.target.style.backgroundColor = 'rgb(86, 153, 219)'}
-                            onMouseLeave={(e) => e.target.style.backgroundColor = ''}
+                            onMouseEnter={(e) => {
+                                e.target.style.backgroundColor = 'rgb(86, 153, 219)';
+                                e.target.style.boxShadow = '0 0 5px rgba(0, 0, 0, 0.3)';
+                            }}
+                            onMouseLeave={(e) => {
+                                e.target.style.backgroundColor = '';
+                                e.target.style.boxShadow = '';
+                            }}
                         >Frontend Technologies</Typography>
                         <Typography paragraph='true' sx={{
                             cursor: 'pointer',
@@ -634,8 +650,14 @@ function ContentTable({ setCurrentPage }) {
                             borderRadius: '0.2rem',
                             paddingLeft: '0.3rem',
                         }} onClick={() => setCurrentPage(3)}
-                            onMouseEnter={(e) => e.target.style.backgroundColor = 'rgb(86, 153, 219)'}
-                            onMouseLeave={(e) => e.target.style.backgroundColor = ''}
+                            onMouseEnter={(e) => {
+                                e.target.style.backgroundColor = 'rgb(86, 153, 219)';
+                                e.target.style.boxShadow = '0 0 5px rgba(0, 0, 0, 0.3)';
+                            }}
+                            onMouseLeave={(e) => {
+                                e.target.style.backgroundColor = '';
+                                e.target.style.boxShadow = '';
+                            }}
                         >CSS Fundamentals</Typography>
                         <Typography paragraph='true' sx={{
                             cursor: 'pointer',
@@ -644,9 +666,53 @@ function ContentTable({ setCurrentPage }) {
                             paddingLeft: '0.3rem',
                         }}
                             onClick={() => setCurrentPage(4)}
-                            onMouseEnter={(e) => e.target.style.backgroundColor = 'rgb(86, 153, 219)'}
-                            onMouseLeave={(e) => e.target.style.backgroundColor = ''}
+                            // onMouseEnter={(e) => e.target.style.backgroundColor = 'rgb(86, 153, 219)'}
+                            // onMouseLeave={(e) => e.target.style.backgroundColor = ''}
+                            onMouseEnter={(e) => {
+                                e.target.style.backgroundColor = 'rgb(86, 153, 219)';
+                                e.target.style.boxShadow = '0 0 5px rgba(0, 0, 0, 0.3)';
+                            }}
+                            onMouseLeave={(e) => {
+                                e.target.style.backgroundColor = '';
+                                e.target.style.boxShadow = '';
+                            }}
                         >CSS-FlexBox</Typography>
+                        <Typography paragraph='true' sx={{
+                            cursor: 'pointer',
+                            textDecoration: 'underline',
+                            borderRadius: '0.2rem',
+                            paddingLeft: '0.3rem',
+                        }}
+                            onClick={async() => {
+                                // alert('navigate to /course/frontenddev/Test')
+                                const result = window.confirm('Do you want to attempt the test');
+                                if (result === true) {
+                                    navigate("Test");
+                                } 
+                                // if (result === true) {
+                                //     const courseId = localStorage.getItem('courseid');
+                                //     const resAttempt = await axios.get(`${BASE_URL}/user/learn/${courseId}/attempt`, {
+                                //         headers: {
+                                //             Authorization: `Bearer ${localStorage.getItem('token')}`
+                                //         }
+                                //     });
+
+                                //     if (resAttempt.data.attemptNumber > 0) {
+                                //         alert("Test already attempted..Pay to attempt again");
+                                //     } else {
+                                //         navigate("Test");
+                                //     }
+                                // }
+                            }}
+                            onMouseEnter={(e) => {
+                                e.target.style.backgroundColor = 'rgb(86, 153, 219)';
+                                e.target.style.boxShadow = '0 0 5px rgba(0, 0, 0, 0.3)';
+                            }}
+                            onMouseLeave={(e) => {
+                                e.target.style.backgroundColor = '';
+                                e.target.style.boxShadow = '';
+                            }}
+                        >Test</Typography>
                     </Card>
                 </Container>
             </aside>
