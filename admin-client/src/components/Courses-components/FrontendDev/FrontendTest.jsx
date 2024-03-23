@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { Typography, Container, FormControl, RadioGroup, FormControlLabel, Radio, Button, Card, Divider } from '@mui/material';
 import { Box } from '@mui/material';
+import axios from 'axios';
+import { BASE_URL } from '../../../config';
 
 const FrontendTestPage = () => {
     const questions = [
@@ -79,9 +81,10 @@ const FrontendTestPage = () => {
     };
 
     // Handle test submission
-    const handleSubmit = () => {
+    const handleSubmit = async() => {
         const score = calculateScore();
-        alert(`Your score: ${score}/${questions.length}`);
+        // alert(`Your score: ${score}/${questions.length}`);
+        return score;
     };
 
     return (
@@ -139,14 +142,24 @@ const FrontendTestPage = () => {
                             display: 'flex',
                             justifyContent: 'flex-end',
                         }}>
-                            <Button type="submit" variant="contained" color="primary" onClick={() => {
-                                // alert("Do you want to submit");
-                                const result = window.confirm("Do you want to submit");
-                                if(result === true) {
-                                    const score = calculateScore();
-                                    alert('Your Score ' + score + '/10');
-                                }                                 //if yes then handleSubmit else user can review their answers
+                            <Button type="submit" variant="contained" color="primary" onClick={async () => {
+                                alert("Do you want to submit");
+                                const score = await handleSubmit();
+                                // console.log('your score is ' + score);
+                                const courseId = localStorage.getItem('courseid');
+                                const response = await axios.post(`${BASE_URL}/user/submit/` + String(courseId), {
+                                    score: score,
+                                }, {
+                                    headers: {
+                                        "Content-type": "application/json",
+                                        "Authorization": "Bearer " + localStorage.getItem("token")
+                                    }
+
+                                })
+
+                                // redirect to a page screen which will show the result.
                             }}>Submit</Button>
+
                         </div>
                     </Card>
                 </Box>

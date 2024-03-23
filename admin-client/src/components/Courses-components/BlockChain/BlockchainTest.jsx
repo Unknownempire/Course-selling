@@ -133,17 +133,6 @@ const BlockChainTestPage = () => {
   // Handle test submission
   const handleSubmit = async () => {
     const score = calculateScore();
-    // alert(`Your score: ${score}/${questions.length}`);
-    // const courseId = localStorage.getItem('courseid');
-    // const response = await axios.post(`${BASE_URL}/submit/${courseId}`, {
-    //   score : score,
-    // }, {
-    //   headers: {
-    //     "Content-type": "application/json",
-    //     "Authorization": "Bearer " + localStorage.getItem("token")
-    //   }
-
-    // })
     return score;
   };
 
@@ -204,11 +193,10 @@ const BlockChainTestPage = () => {
             }}>
               <Button type="submit" variant="contained" color="primary" onClick={async () => {
                 alert("Do you want to submit");
-                const score = handleSubmit();
-                console.log(score);
+                const score = await handleSubmit();
+                console.log('your score is ' + score);
                 const courseId = localStorage.getItem('courseid');
-                console.log(courseId);
-                const response = await axios.post(`${BASE_URL}/submit/` + String(courseId), {
+                const response = await axios.post(`${BASE_URL}/user/submit/` + String(courseId), {
                   score: score,
                 }, {
                   headers: {
@@ -217,7 +205,8 @@ const BlockChainTestPage = () => {
                   }
 
                 })
-                //if yes then handleSubmit else user can review their answers
+
+                // redirect to a page screen which will show the result.
               }}>Submit</Button>
             </div>
           </Card>
