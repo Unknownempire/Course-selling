@@ -17,7 +17,8 @@ const courseSchema = new mongoose.Schema({
     description: String,
     price: Number,
     imageLink: String,
-    published: Boolean
+    published: Boolean,
+    // testAttempted: Number
   });
 
 const creditSchema = new mongoose.Schema({
@@ -29,14 +30,27 @@ const creditSchema = new mongoose.Schema({
 
   });
 
+const userAttemptSchema = new mongoose.Schema({
+  user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+  courses: [{
+    course: { type: mongoose.Schema.Types.ObjectId, ref: 'Course', required: true },
+    attempts: { type: Number, default: 0 },
+    lastAttemptDate: { type: Date, default: Date.now },
+    score : {type: Number, default: 0},
+  }]
+});
+
+
 const User = mongoose.model('User', userSchema);
 const Admin = mongoose.model('Admin', adminSchema);
 const Course = mongoose.model('Course', courseSchema);
 const Credit = mongoose.model('CreditCards', creditSchema);
+const UserAttempt = mongoose.model('userAttempt', userAttemptSchema);
   
   module.exports = {
     User,
     Admin,
     Course,
-    Credit
+    Credit,
+    UserAttempt,
   }
