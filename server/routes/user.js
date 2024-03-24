@@ -81,7 +81,7 @@ router.post('/courses/:courseId', authenticateJwt, async (req, res) => {
   }
 });
 
-//Test submit
+//Test submit --- Need to correct it 
 router.post('/submit/:courseId', authenticateJwt, async (req, res) => {
   try {
     const user = await User.findOne({ username: req.user.username });
@@ -120,6 +120,55 @@ router.post('/submit/:courseId', authenticateJwt, async (req, res) => {
     res.status(500).json({ message: 'Internal server error' });
   }
 });
+//--------------
+
+
+//Test attempt
+router.get('/learn/Test/:courseId', authenticateJwt, async(req,res) => {
+  //check if attempt number in the userAttempt schema for the courseId 
+  // attempt number should be equal to 0 
+  try {
+    const user = await User.findOne({ username: req.user.username });
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    const courseId = req.params.courseId;
+    let userAttempt = await UserAttempt.findOne({ user: user._id });
+    
+    if (!userAttempt) {
+      // Create a new user attempt if it doesn't exist
+      console.log('New User');
+      userAttempt = new UserAttempt({
+        user: user._id,
+        courses: [{ course: courseId, attempts: 1, lastAttemptDate: Date.now()}]
+      });
+      res.json({'attempts' : 0});
+    } else {
+      // User attempt exists, check if the course is already attempted
+      const courseIndex = userAttempt.courses.findIndex(course => course.course.equals(courseId));
+      if (courseIndex === -1) {
+        // Course not attempted, add it to the courses array
+        userAttempt.courses.push({ course: courseId, attempts: 1, lastAttemptDate: Date.now()});
+        res.json({'attempts' : 0});
+      } else {
+        // Course already attempted, update attempts count and last attempt date
+        // userAttempt.courses[courseIndex].attempts++;
+        // userAttempt.courses[courseIndex].lastAttemptDate = Date.now();
+        // userAttempt.courses[courseIndex].score = req.body.score;
+        console.log('Course Already attempted');
+        res.json({'attempts' : 1});
+      }
+    }
+    
+    await userAttempt.save();
+
+    // res.json({ message: 'User attempt updated successfully' });
+  } catch (error) {
+    console.error('Error:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+})
 
 // router.post('/submit/:courseId', authenticateJwt, async(req,res) => {
 //   try {
