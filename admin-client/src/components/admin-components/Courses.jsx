@@ -11,6 +11,7 @@ function Courses() {
     const [courses, setCourses] = useState([]);
     const isAdmin = useRecoilValue(isadminState);
     const [purchased,setPurchased] = useState([]);
+    const [loading, setLoading] = useState(true); // till the time page is loading
 
     const init = async () => {
         const response = await axios.get(`${BASE_URL}/admin/courses/`, {
@@ -28,6 +29,7 @@ function Courses() {
             })
             setPurchased(purchased_response.data.purchasedCourses);
         }
+        setLoading(false);
     }
 
     let purchased_courses_set = new Set();
@@ -38,6 +40,9 @@ function Courses() {
     useEffect(() => {
         init();
     }, []);
+    if(loading) {
+        return <Loading></Loading>
+    } else {
 
     return <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center" }}>
         {courses.map(course => {
@@ -51,6 +56,7 @@ function Courses() {
         }
         )}
     </div>
+    }
 }
 
 export function Course({ course, purchased }) {
