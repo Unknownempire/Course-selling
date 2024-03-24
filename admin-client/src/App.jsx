@@ -20,6 +20,7 @@ import { userState } from "./store/atoms/user.js";
 import BlockChainContent from './components/Courses-components/BlockChain/BlockChainContent.jsx';
 import VueContent from './components/Courses-components/Vue/VueContent.jsx'
 import FrontendEndDevContent from './components/Courses-components/FrontendDev/FrontendDevContent.jsx';
+import CloudComputingContent from './components/Courses-components/CloudComputing/CloudComputingContent.jsx'
 
 //Test
 import FrontendTestPage from './components/Courses-components/FrontendDev/FrontendTest.jsx';
@@ -66,6 +67,7 @@ function App() {
                             <Route path={"/course/BlockChainforBeginner"} element={<BlockChainContent />} />
                             <Route path={"/course/Vue"} element={<VueContent />} />
                             <Route path={"/course/FrontendDev"} element={<FrontendEndDevContent />} />
+                            <Route path={"/course/CloudComputing"} element={<CloudComputingContent />} />
                             {/* Test */}
                             <Route path={"/course/FrontendDev/Test"} element={<FrontendTestPage />} />
                             <Route path={"/course/Vue/Test"} element={<VueTestPage />} />
