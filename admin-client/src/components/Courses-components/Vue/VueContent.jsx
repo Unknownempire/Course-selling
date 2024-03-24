@@ -633,25 +633,38 @@ function ContentTable({setCurrentPage}) {
                             borderRadius:'0.2rem',
                             paddingLeft: '0.3rem',
                     }} onClick={async() => {
-                        const result = window.confirm('Do you want to attempt the test');
-                        if (result === true) {
-                            navigate("Test");
-                        } 
-                        // if (result === true) {
-                        //     const courseId = localStorage.getItem('courseid');
-                        //     const resAttempt = await axios.get(`${BASE_URL}/user/submit/${courseId}/attempt`, {
-                        //         headers: {
-                        //             Authorization: `Bearer ${localStorage.getItem('token')}`
-                        //         }
-                        //     });
+                                const result = window.confirm('Do you want to attempt the test');
+                                const courseId = localStorage.getItem('courseid')
+                                if (result === true) {
+                                    const response = await axios.get(`${BASE_URL}/user/learn/Test/` + String(courseId),
+                                        {
+                                            headers: {
+                                                "Content-type": "application/json",
+                                                "Authorization": "Bearer " + localStorage.getItem("token")
+                                            }
 
-                        //     if (resAttempt.data.attemptNumber > 0) {
-                        //         alert("Test already attempted..Pay to attempt again");
-                        //     } else {
-                        //         navigate("Test");
-                        //     }
-                        // } 
-                    }}
+                                        })
+                                    if (response.data.attempts === 0) {
+                                        navigate("Test");
+                                    } else {
+                                        alert("Test already Attempted");
+                                    }
+                                }
+                                // if (result === true) {
+                                //     const courseId = localStorage.getItem('courseid');
+                                //     const resAttempt = await axios.get(`${BASE_URL}/user/submit/${courseId}/attempt`, {
+                                //         headers: {
+                                //             Authorization: `Bearer ${localStorage.getItem('token')}`
+                                //         }
+                                //     });
+
+                                //     if (resAttempt.data.attemptNumber > 0) {
+                                //         alert("Test already attempted..Pay to attempt again");
+                                //     } else {
+                                //         navigate("Test");
+                                //     }
+                                // } 
+                            }}
                             // onMouseEnter={(e) => e.target.style.backgroundColor = ''}
                             // onMouseLeave={(e) => e.target.style.backgroundColor = ''}
                             onMouseEnter={(e) => {
@@ -662,8 +675,8 @@ function ContentTable({setCurrentPage}) {
                                 e.target.style.backgroundColor = '';
                                 e.target.style.boxShadow = '';
                             }}
-                    >Test</Typography>
-                </Card>
+                        >Test</Typography>
+                    </Card>
                 </Container>
             </aside>
         </div>

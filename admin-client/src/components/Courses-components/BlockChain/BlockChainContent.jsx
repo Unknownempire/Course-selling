@@ -432,8 +432,21 @@ function ContentTable({ setCurrentPage }) {
                             paddingLeft: '0.3rem',
                         }} onClick={async() => {
                                 const result = window.confirm('Do you want to attempt the test');
+                                const courseId = localStorage.getItem('courseid')
                                 if (result === true) {
-                                    navigate("Test");
+                                    const response = await axios.get(`${BASE_URL}/user/learn/Test/` + String(courseId),
+                                    {
+                                        headers: {
+                                            "Content-type": "application/json",
+                                            "Authorization": "Bearer " + localStorage.getItem("token")
+                                        }
+
+                                    })
+                                    if (response.data.attempts === 0) {
+                                        navigate("Test");
+                                    } else {
+                                        alert("Test already Attempted");
+                                    }
                                 } 
                                 // if (result === true) {
                                 //     const courseId = localStorage.getItem('courseid');
