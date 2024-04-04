@@ -557,6 +557,7 @@ function ContentTable({ setCurrentPage }) {
                                     navigate("Test");
                                 } else {
                                     alert("Test already Attempted");
+                                    navigate("/repayment/" + courseId);
                                 }
                             }
                             // if (result === true) {
