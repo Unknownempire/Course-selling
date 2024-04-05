@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Typography, Container, FormControl, RadioGroup, FormControlLabel, Radio, Button, Card, Divider } from '@mui/material';
 import { Box } from '@mui/material';
 import axios from 'axios';
 import { BASE_URL } from '../../../config';
+import {useNavigate} from "react-router-dom";
 
 const BlockChainTestPage = () => {
   const questions = [
@@ -108,9 +109,14 @@ const BlockChainTestPage = () => {
     },
   ];
 
+  useEffect(() => {
+    alert("Don't leave the test without submitting else score will be marked 0");
+  },[])
+
 
   // Initialize state for storing selected answers
   const [answers, setAnswers] = useState(Array(questions.length).fill(''));
+  const navigate = useNavigate();
 
   // Handle answer selection
   const handleAnswerChange = (index, value) => {
@@ -207,6 +213,7 @@ const BlockChainTestPage = () => {
                 })
 
                 // redirect to a page screen which will show the result.
+                navigate("/courses") //temporary
               }}>Submit</Button>
             </div>
           </Card>
