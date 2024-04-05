@@ -22,17 +22,37 @@ function UserCourses() {
         init();
     }, []);
 
+    if(courses.length !== 0) {
+
     return <div style={{display: "flex", flexWrap: "wrap", justifyContent: "center"}}>
         {courses && courses.map(course => {
             return <Course course={course} />}
         )}
     </div>
+    } else {
+        return (
+            <div style={{
+                display:'flex',
+                flexDirection:'column',
+                justifyContent:'center',
+                alignItems:'center',
+                height: '100%',
+            }}>
+                {/* <Typography variant="h4">¯_(ツ)_/¯</Typography> */}
+                <Typography variant="h4">😢💔</Typography>
+                <Typography variant="h4"></Typography>
+                <Typography variant="h6">Emptiness</Typography>
+                <image src=""></image>
+            </div>
+        )
+    }
 }
 
 export function Course({course}) {
     const navigate = useNavigate();
 
-    return <Card style={{
+
+    return (<Card style={{
         margin: 10,
         width: 300,
         minHeight: 200,
@@ -79,7 +99,7 @@ export function Course({course}) {
                 navigate("/course/" + route);
             }}>Learn</Button>
         </div>
-    </Card>
+    </Card>)
 
 }
 
