@@ -80,6 +80,22 @@ router.post('/courses/:courseId', authenticateJwt, async (req, res) => {
     }
   }
 });
+//---------------------------------
+//Correct this first
+//Payment for reAttempt
+router.post('/courses/Test/:courseId' , authenticateJwt, async(req,res) => {
+  const credit = await Credit.findOne(req.body);
+  if(!credit) {
+    console.log('payment not done');
+    res.json({payment : 0});
+    return;
+  } else {
+    console.log('payment done');
+    res.json({payment : 1});
+  }
+})
+
+//----------------------------------
 
 //Test submit --- Need to correct it 
 router.post('/submit/:courseId', authenticateJwt, async (req, res) => {
@@ -245,23 +261,5 @@ router.get('/learn/:courseId',authenticateJwt, async(req,res) => {
   res.json({ message: route });
 })
 
-//Not Completed;
-//Test attempting
-// router.get('/learn/:courseId/attempt',authenticateJwt, async(req,res) => {
-//   const course = await Course.findOne({ _id: req.params.courseId });
-//   let attemptNumber = course.testAttempted;
-
-//   if(course) {
-//     if (attemptNumber === 0) {
-//       res.json({ "attemptNumber": attemptNumber });
-//       attemptNumber++;
-//       const updatedcourse = await Course.findByIdAndUpdate(req.params.courseId, { testAttempted: attemptNumber }, { new: true });
-//     } else {
-//       res.json({"attemptNumber" : attemptNumber});
-//     }
-//     return;
-//   }
-//   res.status(404).json({"message" : "Course not found"});
-// })
 
 module.exports = router
