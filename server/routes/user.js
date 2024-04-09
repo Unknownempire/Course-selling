@@ -80,8 +80,7 @@ router.post('/courses/:courseId', authenticateJwt, async (req, res) => {
     }
   }
 });
-//---------------------------------
-//Correct this first
+
 //Payment for reAttempt
 router.post('/courses/Test/:courseId' , authenticateJwt, async(req,res) => {
   const credit = await Credit.findOne(req.body);
@@ -93,9 +92,8 @@ router.post('/courses/Test/:courseId' , authenticateJwt, async(req,res) => {
     console.log('payment done');
     res.json({payment : 1});
   }
-})
+});
 
-//----------------------------------
 
 //Test submit --- Need to correct it 
 router.post('/submit/:courseId', authenticateJwt, async (req, res) => {
@@ -151,7 +149,7 @@ router.get('/learn/Test/:courseId', authenticateJwt, async(req,res) => {
 
     const courseId = req.params.courseId;
     let userAttempt = await UserAttempt.findOne({ user: user._id });
-    
+
     if (!userAttempt) {
       // Create a new user attempt if it doesn't exist
       console.log('New User');
@@ -186,47 +184,34 @@ router.get('/learn/Test/:courseId', authenticateJwt, async(req,res) => {
   }
 })
 
-// router.post('/submit/:courseId', authenticateJwt, async(req,res) => {
-//   try {
-//     const user = await User.findOne({ username: req.user.username });
-//     const score = req.body.score;
-//     console.log('score ' + score);
+//Fetching the score
+router.post('/learn/Test/result', authenticateJwt, async(req,res) => {
+    const user = await User.findOne({ username: req.user.username });
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    } 
 
-//     if (user) {
-//       // User found, check if the course exists
-//       const courseId = req.params.courseId;
-//       const course = await Course.findById(courseId);
+    let userAttempt = await UserAttempt.findOne({ user: user._id });
+    let data = req.body;
+    let courseId = data.courseId;
 
-//       if (course) {
-//         // Course found, update the user attempt
-//         const userAttempt = await UserAttempt.findOneAndUpdate(
-//           { user: user._id, 'courses.course': courseId },
-//           { $inc: { 'courses.$.attempts': 1 }, 'courses.$.lastAttemptDate': Date.now(), 'course.$.score' : req.body.score },
-//           { new: true }
-//         );
+    console.log(courseId);
 
-//         if (!userAttempt) {
-//           // If userAttempt is not found, create a new one
-//           const newUserAttempt = new UserAttempt({
-//             user: user._id,
-//             courses: [{ course: courseId, attempts: 1, score: req.body.score }]
-//           });
-//           await newUserAttempt.save();
-//         }
+    if(userAttempt) {
+      const courseIndex = userAttempt.courses.findIndex(course => course.course.equals(courseId));
+      if(courseIndex === -1) {
+        res.status(404).json({message: "Test not attempted"});
+        return;
+      } else {
+        let score = userAttempt.courses[courseIndex].score;
+        res.json({score : score});
+        return;
+      }
+    } else {
+      res.status(500).json({message: "Internal Server Error"});
+    }
 
-//         res.json({ message: 'User attempt updated successfully' });
-//       } else {
-//         res.status(404).json({ message: 'Course not found' });
-//       }
-//     } else {
-//       res.status(404).json({ message: 'User not found' });
-//     }
-//   } catch (error) {
-//     console.error('Error:', error);
-//     res.status(500).json({ message: 'Internal server error' });
-//   }
-// })
-
+})
 router.get('/purchasedCourses', authenticateJwt, async (req, res) => {
   const user = await User.findOne({ username: req.user.username }).populate('purchasedCourses');
   if (user) {
