@@ -2,10 +2,13 @@ import { Button, Card, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import {useNavigate} from "react-router-dom";
 import { BASE_URL } from "../../config.js";
+import  Loading  from "./Loading.jsx";
 import axios from "axios";
 
 function UserCourses() {
     const [courses, setCourses] = useState([]);
+    const [loading, setLoading] = useState(true);
+
 
     const init = async () => {
         const response = await axios.get(`${BASE_URL}/user/purchasedCourses/`, {
@@ -16,21 +19,27 @@ function UserCourses() {
         // console.log(response.data.purchasedCourses);
 
         setCourses(response.data.purchasedCourses);
+        setLoading(false);
     }
 
     useEffect(() => {
         init();
     }, []);
-
-    if(courses.length !== 0) {
-
-    return <div style={{display: "flex", flexWrap: "wrap", justifyContent: "center"}}>
-        {courses && courses.map(course => {
-            return <Course course={course} />}
-        )}
-    </div>
+    
+    if(loading) {
+        return <Loading></Loading>
     } else {
-        return (
+
+        if (courses.length !== 0) {
+
+            return <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center" }}>
+                {courses && courses.map(course => {
+                    return <Course course={course} />
+                }
+                )}
+            </div>
+        } else {
+            return (
             <div style={{
                 display:'flex',
                 flexDirection:'column',
@@ -45,10 +54,12 @@ function UserCourses() {
                 <image src=""></image>
             </div>
         )
+
+        }
     }
 }
 
-export function Course({course}) {
+export function Course({ course }) {
     const navigate = useNavigate();
 
 
