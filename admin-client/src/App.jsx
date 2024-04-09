@@ -27,6 +27,9 @@ import FrontendTestPage from './components/Courses-components/FrontendDev/Fronte
 import VueTestPage from './components/Courses-components/Vue/VueTest.jsx';
 import BlockChainTestPage from './components/Courses-components/BlockChain/BlockchainTest.jsx';
 
+//Result
+import Results from './components/user-components/Results.jsx';
+
 import {
     RecoilRoot,
     useSetRecoilState
@@ -72,6 +75,8 @@ function App() {
                             <Route path={"/course/FrontendDev/Test"} element={<FrontendTestPage />} />
                             <Route path={"/course/Vue/Test"} element={<VueTestPage />} />
                             <Route path={"/course/BlockChainforBeginner/Test"} element={<BlockChainTestPage />} />
+                            {/* Results */}
+                            <Route path={"/course/learn/result"} element={<Results></Results>} />
 
                         </Routes>
                     </Router>
