@@ -213,7 +213,7 @@ const BlockChainTestPage = () => {
                 })
 
                 // redirect to a page screen which will show the result.
-                navigate("/courses") //temporary
+                navigate("/course/learn/result") //temporary
               }}>Submit</Button>
             </div>
           </Card>

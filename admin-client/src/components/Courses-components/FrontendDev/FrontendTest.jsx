@@ -158,6 +158,7 @@ const FrontendTestPage = () => {
                                 })
 
                                 // redirect to a page screen which will show the result.
+                                navigate("/course/learn/result") //temporary
                             }}>Submit</Button>
 
                         </div>
