@@ -51,15 +51,42 @@ function UserSignup() {
                     size={"large"}
                     variant="contained"
                     onClick={async() => {
-                        const response = await axios.post(`${BASE_URL}/user/signup`, {
-                            username: email,
-                            password: password
-                        })
-                        let data = response.data;
-                        localStorage.setItem("token", data.token);
-                        // window.location = "/"
-                        setUser({userEmail: email, isLoading: false})
-                        navigate("/usercourses")
+                        try {
+                            const response = await axios.post(`${BASE_URL}/user/signup`, {
+                                username: email,
+                                password: password
+                            });
+                            const data = response.data;
+                            localStorage.setItem("token", data.token);
+                            setUser({ userEmail: email, isLoading: false })
+                            navigate("/courses")
+                        } catch (error) {
+                            if (error.response && error.response.status === 411) {
+                                // Handle validation errors
+                                // const validationErrors = error.response.data.errors;
+                                const validationErrors = error.response.data.error.issues;
+                                // console.log(validationErrors[0].path[0]);
+                                validationErrors.forEach(element => {
+                                    // console.log(element.path[0])
+                                    const problem = element.path[0];
+                                    if(element.code === 'too_small' || "too_big") {
+                                        // alert(problem + " is " + element.code + " minimum length should be " + element.minimum + " and maximum length can be " + element.maximum );
+                                        alert(problem + " : " + element.message );
+                                    } else {
+                                        // alert(problem + " should be of type " + element.type);
+                                        alert(problem + " : " + element.message );
+                                    }
+                                });
+                                // Display validation errors to the user
+                                console.log("Validation errors:", validationErrors);
+                                // Update your UI to show the validation errors to the user
+                            } else {
+                                // Handle other types of errors (e.g., server errors)
+                                console.error("An error occurred:", error.message);
+                                // Display a generic error message to the user
+                                // Update your UI to inform the user about the error
+                            }
+                        }
                     }}
 
                 > Signup</Button>
