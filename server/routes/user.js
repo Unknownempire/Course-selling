@@ -3,6 +3,8 @@ const jwt = require('jsonwebtoken');
 const { authenticateJwt, SECRET } = require("../middleware/auth");
 const { User, Course, Admin, Credit, UserAttempt } = require("../db");
 const router = express.Router();
+const z = require('zod');
+
 
 //not tested yet
 // router.get("/me", authenticateJwt, async (req, res) => {
@@ -16,8 +18,23 @@ const router = express.Router();
 //     })
 // });
 
+const signupInput = z.object({
+  username: z.string().min(10).max(50),
+  password: z.string().min(8).max(20)
+})
+
 router.post('/signup', async (req, res) => {
-  const { username, password } = req.body;
+// zod validation
+  const parsedInput = signupInput.safeParse(req.body);
+  if(!parsedInput.success) {
+    res.status(411).json({error: parsedInput.error})
+    return;
+  }
+  const username = parsedInput.data.username;
+  const password = parsedInput.data.password;
+
+// -----
+  // const { username, password } = req.body;
   const user = await User.findOne({ username });
   if (user) {
     res.status(403).json({ message: 'User already exists' });
