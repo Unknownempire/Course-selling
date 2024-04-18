@@ -3,6 +3,8 @@ import { Typography, Container, FormControl, RadioGroup, FormControlLabel, Radio
 import { Box } from '@mui/material';
 import axios from 'axios';
 import { BASE_URL } from '../../../config';
+import { useNavigate } from 'react-router-dom';
+
 
 const FrontendTestPage = () => {
     const questions = [
@@ -58,7 +60,7 @@ const FrontendTestPage = () => {
   }
 ];
 
-
+    const navigate = useNavigate();
     // Initialize state for storing selected answers
     const [answers, setAnswers] = useState(Array(questions.length).fill(''));
 
