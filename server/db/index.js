@@ -30,22 +30,50 @@ const creditSchema = new mongoose.Schema({
 
   });
 
+// const userAttemptSchema = new mongoose.Schema({
+//   user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+//   courses: [{
+//     course: { type: mongoose.Schema.Types.ObjectId, ref: 'Course', required: true },
+//     attempts: { type: Number, default: 0 },
+//     lastAttemptDate: { type: Date, default: Date.now },
+//     score : {type: Number, default: 0},
+//   }]
+// });
+
+const TestQuestionsSchema = new mongoose.Schema({
+  courseId: { type: mongoose.Schema.Types.ObjectId, ref: 'Course', required: true },
+  questions : [{
+    // _id:{ type : mongoose.Schema.Types.ObjectId},
+    // _id: { type: mongoose.Schema.Types.ObjectId, default: () => mongoose.Types.ObjectId() },
+    question : String,
+    options : [String],
+    correctAnswer :  String
+  }]
+})
+//New userAttempt schema for recording the responses for each question
 const userAttemptSchema = new mongoose.Schema({
   user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
   courses: [{
     course: { type: mongoose.Schema.Types.ObjectId, ref: 'Course', required: true },
     attempts: { type: Number, default: 0 },
     lastAttemptDate: { type: Date, default: Date.now },
-    score : {type: Number, default: 0},
+    score: { type: Number, default: 0 },
+    responses: [{
+      // questionId: { type: mongoose.Schema.Types.ObjectId, ref: 'Course.questions._id' },
+      isCorrect: Boolean,
+      question: String,
+      selectedOption: String,
+      correctAnswer: String
+    }]
   }]
 });
-
 
 const User = mongoose.model('User', userSchema);
 const Admin = mongoose.model('Admin', adminSchema);
 const Course = mongoose.model('Course', courseSchema);
 const Credit = mongoose.model('CreditCards', creditSchema);
 const UserAttempt = mongoose.model('userAttempt', userAttemptSchema);
+const TestQuestions = mongoose.model('TestQuestionns', TestQuestionsSchema);
   
   module.exports = {
     User,
@@ -53,4 +81,5 @@ const UserAttempt = mongoose.model('userAttempt', userAttemptSchema);
     Course,
     Credit,
     UserAttempt,
+    TestQuestions,
   }
