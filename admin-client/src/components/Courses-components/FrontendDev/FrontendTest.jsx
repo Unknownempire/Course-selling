@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Typography, Container, FormControl, RadioGroup, FormControlLabel, Radio, Button, Card, Divider } from '@mui/material';
 import { Box } from '@mui/material';
 import axios from 'axios';
@@ -7,63 +7,80 @@ import { useNavigate } from 'react-router-dom';
 
 
 const FrontendTestPage = () => {
-    const questions = [
-  {
-    question: "What are the basic languages required for creating a website?",
-    options: ["HTML", "CSS", "JavaScript", "All of the above"],
-    correctAnswer: "All of the above"
-  },
-  {
-    question: "Where should one start to become a Front-End Developer?",
-    options: ["HTML", "CSS", "JavaScript", "All of the above"],
-    correctAnswer: "All of the above"
-  },
-  {
-    question: "What is the purpose of HTML in web development?",
-    options: ["Defines the structure of a web page", "Styles the content of a web page", "Adds interactivity to a web page", "None of the above"],
-    correctAnswer: "Defines the structure of a web page"
-  },
-  {
-    question: "Which CSS property is used to change the font size of text?",
-    options: ["font-weight", "font-style", "font-size", "text-align"],
-    correctAnswer: "font-size"
-  },
-  {
-    question: "What is the role of JavaScript in web development?",
-    options: ["Defines the structure of a web page", "Styles the content of a web page", "Adds interactivity to a web page", "None of the above"],
-    correctAnswer: "Adds interactivity to a web page"
-  },
-  {
-    question: "Which of the following is a correct way to comment in HTML?",
-    options: ["<!-- This is a comment -->", "/* This is a comment */", "// This is a comment", "// This is a comment //"],
-    correctAnswer: "<!-- This is a comment -->"
-  },
-  {
-    question: "What does CSS stand for?",
-    options: ["Creative Style Sheets", "Cascading Style Sheets", "Computer Style Sheets", "Colorful Style Sheets"],
-    correctAnswer: "Cascading Style Sheets"
-  },
-  {
-    question: "Which of the following is NOT a valid CSS selector?",
-    options: [".class-name", "#id-name", "<div>", "element-name"],
-    correctAnswer: "<div>"
-  },
-  {
-    question: "What is the purpose of the justify-content property in CSS Flexbox?",
-    options: ["Aligns items along the main axis", "Aligns items along the cross axis", "Adds space between flex items", "Centers flex items horizontally"],
-    correctAnswer: "Adds space between flex items"
-  },
-  {
-    question: "What is the purpose of the align-items property in CSS Flexbox?",
-    options: ["Aligns items along the main axis", "Aligns items along the cross axis", "Adds space between flex items", "Centers flex items vertically"],
-    correctAnswer: "Aligns items along the cross axis"
+  const [questions,setQuestions] = useState([]);
+
+  const init = async() => {
+    const courseId = localStorage.getItem('courseid');
+    const response = await axios.get(`${BASE_URL}/user/learn/questions/` + String(courseId), {
+      headers : {
+        Authorization : `Bearer ${localStorage.getItem('token')}`
+      }
+    })
+
+    const data = response.data;
+    setQuestions(data.Test);
   }
-];
+
+  useEffect(() => {
+    init();
+  },[])
+//     const questions = [
+//   {
+//     question: "What are the basic languages required for creating a website?",
+//     options: ["HTML", "CSS", "JavaScript", "All of the above"],
+//     correctAnswer: "All of the above"
+//   },
+//   {
+//     question: "Where should one start to become a Front-End Developer?",
+//     options: ["HTML", "CSS", "JavaScript", "All of the above"],
+//     correctAnswer: "All of the above"
+//   },
+//   {
+//     question: "What is the purpose of HTML in web development?",
+//     options: ["Defines the structure of a web page", "Styles the content of a web page", "Adds interactivity to a web page", "None of the above"],
+//     correctAnswer: "Defines the structure of a web page"
+//   },
+//   {
+//     question: "Which CSS property is used to change the font size of text?",
+//     options: ["font-weight", "font-style", "font-size", "text-align"],
+//     correctAnswer: "font-size"
+//   },
+//   {
+//     question: "What is the role of JavaScript in web development?",
+//     options: ["Defines the structure of a web page", "Styles the content of a web page", "Adds interactivity to a web page", "None of the above"],
+//     correctAnswer: "Adds interactivity to a web page"
+//   },
+//   {
+//     question: "Which of the following is a correct way to comment in HTML?",
+//     options: ["<!-- This is a comment -->", "/* This is a comment */", "// This is a comment", "// This is a comment //"],
+//     correctAnswer: "<!-- This is a comment -->"
+//   },
+//   {
+//     question: "What does CSS stand for?",
+//     options: ["Creative Style Sheets", "Cascading Style Sheets", "Computer Style Sheets", "Colorful Style Sheets"],
+//     correctAnswer: "Cascading Style Sheets"
+//   },
+//   {
+//     question: "Which of the following is NOT a valid CSS selector?",
+//     options: [".class-name", "#id-name", "<div>", "element-name"],
+//     correctAnswer: "<div>"
+//   },
+//   {
+//     question: "What is the purpose of the justify-content property in CSS Flexbox?",
+//     options: ["Aligns items along the main axis", "Aligns items along the cross axis", "Adds space between flex items", "Centers flex items horizontally"],
+//     correctAnswer: "Adds space between flex items"
+//   },
+//   {
+//     question: "What is the purpose of the align-items property in CSS Flexbox?",
+//     options: ["Aligns items along the main axis", "Aligns items along the cross axis", "Adds space between flex items", "Centers flex items vertically"],
+//     correctAnswer: "Aligns items along the cross axis"
+//   }
+// ];
 
     const navigate = useNavigate();
     // Initialize state for storing selected answers
     const [answers, setAnswers] = useState(Array(questions.length).fill(''));
-
+    const [userResponses,setuserResponses] = useState([]);
     // Handle answer selection
     const handleAnswerChange = (index, value) => {
         const newAnswers = [...answers];
@@ -72,19 +89,41 @@ const FrontendTestPage = () => {
     };
 
     // Calculate the score based on selected answers
-    const calculateScore = () => {
+    const calculateScore = (respo) => {
         let score = 0;
         answers.forEach((answer, index) => {
-            if (answer === questions[index].correctAnswer) {
-                score++;
+            let resp={}
+            resp.question = questions[index].question;
+            resp.selectedOption = answer;
+            if (!answer) {
+                resp.selectedOption = "";
             }
+            if (answer && answer === questions[index].correctAnswer) {
+                score++;
+                resp.isCorrect = true;
+            } else {
+                resp.isCorrect = false;
+            }
+            respo.push(resp)
+        //     if (answer === questions[index].correctAnswer) {
+        //         score++;
+        //         resp.isCorrect = true;
+        //     } else {
+        //         resp.isCorrect = false;
+        //     }
+        //     respo.push(resp)
         });
+        setuserResponses(respo);
         return score;
     };
-
+    useEffect(() => {
+        console.log(userResponses);
+    },[userResponses]);
     // Handle test submission
     const handleSubmit = async() => {
-        const score = calculateScore();
+        const respo = [];
+        const score = calculateScore(respo);
+        setuserResponses(respo)
         // alert(`Your score: ${score}/${questions.length}`);
         return score;
     };
@@ -151,6 +190,7 @@ const FrontendTestPage = () => {
                                 const courseId = localStorage.getItem('courseid');
                                 const response = await axios.post(`${BASE_URL}/user/submit/` + String(courseId), {
                                     score: score,
+                                    responses: userResponses,
                                 }, {
                                     headers: {
                                         "Content-type": "application/json",
