@@ -1,7 +1,7 @@
 const express = require('express');
 const jwt = require('jsonwebtoken');
 const { authenticateJwt, SECRET } = require("../middleware/auth");
-const { User, Course, Admin, Credit, UserAttempt } = require("../db");
+const { User, Course, Admin, Credit, UserAttempt,TestQuestions } = require("../db");
 const router = express.Router();
 const z = require('zod');
 
@@ -101,6 +101,7 @@ router.post('/courses/:courseId', authenticateJwt, async (req, res) => {
 //Payment for reAttempt
 router.post('/courses/Test/:courseId' , authenticateJwt, async(req,res) => {
   const credit = await Credit.findOne(req.body);
+  console.log(credit);
   if(!credit) {
     console.log('payment not done');
     res.json({payment : 0});
@@ -114,6 +115,7 @@ router.post('/courses/Test/:courseId' , authenticateJwt, async(req,res) => {
 
 //Test submit --- Need to correct it 
 router.post('/submit/:courseId', authenticateJwt, async (req, res) => {
+  console.log('user resoponse : ',req.body.responses); //working correctly
   try {
     const user = await User.findOne({ username: req.user.username });
     if (!user) {
@@ -127,19 +129,21 @@ router.post('/submit/:courseId', authenticateJwt, async (req, res) => {
       // Create a new user attempt if it doesn't exist
       userAttempt = new UserAttempt({
         user: user._id,
-        courses: [{ course: courseId, attempts: 1, lastAttemptDate: Date.now(), score: req.body.score }]
+        courses: [{ course: courseId, attempts: 1, lastAttemptDate: Date.now(), score: req.body.score, responses: req.body.responses }]
       });
     } else {
       // User attempt exists, check if the course is already attempted
       const courseIndex = userAttempt.courses.findIndex(course => course.course.equals(courseId));
       if (courseIndex === -1) {
         // Course not attempted, add it to the courses array
-        userAttempt.courses.push({ course: courseId, attempts: 1, lastAttemptDate: Date.now(), score: req.body.score });
+        userAttempt.courses.push({ course: courseId, attempts: 1, lastAttemptDate: Date.now(), score: req.body.score, responses: req.body.responses });
       } else {
         // Course already attempted, update attempts count and last attempt date
         userAttempt.courses[courseIndex].attempts++;
         userAttempt.courses[courseIndex].lastAttemptDate = Date.now();
         userAttempt.courses[courseIndex].score = req.body.score;
+        userAttempt.courses[courseIndex].responses = req.body.responses;
+        console.log('hello : :', userAttempt.courses[courseIndex].responses );
       }
     }
     
@@ -212,7 +216,7 @@ router.post('/learn/Test/result', authenticateJwt, async(req,res) => {
     let data = req.body;
     let courseId = data.courseId;
 
-    console.log(courseId);
+    console.log('CourseId = ',courseId);
 
     if(userAttempt) {
       const courseIndex = userAttempt.courses.findIndex(course => course.course.equals(courseId));
@@ -221,13 +225,28 @@ router.post('/learn/Test/result', authenticateJwt, async(req,res) => {
         return;
       } else {
         let score = userAttempt.courses[courseIndex].score;
-        res.json({score : score});
+        let responses = userAttempt.courses[courseIndex].responses;
+        res.json({
+          score: score,
+          responses: responses,
+        });
         return;
       }
     } else {
       res.status(500).json({message: "Internal Server Error"});
     }
 
+})
+
+// Fetching the questions
+router.get('/learn/questions/:courseId',authenticateJwt, async(req,res) => {
+  const course = await TestQuestions.findOne({courseId : req.params.courseId});
+  if(course) {
+    res.json({Test : course.questions})
+    // console.log(course.questions)
+    return;
+  }
+  res.json({message : "Course not available"});
 })
 router.get('/purchasedCourses', authenticateJwt, async (req, res) => {
   const user = await User.findOne({ username: req.user.username }).populate('purchasedCourses');
@@ -245,6 +264,15 @@ router.post('/payment',authenticateJwt, async(req,res) => {
   res.json({ message: 'User created successfully' });
 
 })
+
+// // api to insert questions in Testquestions only.
+// router.post('/questions', async(req,res) => {
+//   const newquestions = new TestQuestions(req.body);
+//   await newquestions.save();
+//   res.json({message : 'Questions added succesfully'})
+
+
+// })
 
 router.get('/learn/:courseId',authenticateJwt, async(req,res) => {
   const course = await Course.findOne({_id: req.params.courseId});
