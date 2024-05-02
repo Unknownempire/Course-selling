@@ -7,7 +7,7 @@ import { BASE_URL } from "../../config.js";
 import {useNavigate} from "react-router-dom";
 import {useSetRecoilState} from "recoil";
 import {userState} from "../../store/atoms/user.js";
-
+// import {SimpleAlert} from "./SimpleAlert.jsx";
 function UserSignin() {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
@@ -68,8 +68,10 @@ function UserSignin() {
                             userEmail: email,
                             isLoading: false
                         })
+
                         navigate("/courses")
                     }}
+
 
                 > Signin</Button>
             </Card>
