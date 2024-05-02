@@ -9,6 +9,7 @@ import {useNavigate} from "react-router-dom";
 import { courseState } from "../../store/atoms/course.js";
 import {useRecoilState, useRecoilValue, useSetRecoilState} from "recoil";
 import { courseTitle, coursePrice, isCourseLoading, courseImage, courseDetails } from "../../store/selectors/course.js";
+// import SimpleAlert from "./SimpleAlert.jsx";
 
 function TestPayment() {
     let { courseId } = useParams();
@@ -131,10 +132,10 @@ function CreditDetails(courseId) {
                 <Button
                     variant="contained"
                     onClick={async () => {
-                        // console.log("name : " + name);
-                        // console.log("cardNumber : " + creditNumber);
-                        // console.log("expiryDate : " + expirydate);
-                        // console.log("cvv : " + Cvv);
+                        console.log("name : " + name);
+                        console.log("cardNumber : " + creditNumber);
+                        console.log("expiryDate : " + expirydate);
+                        console.log("cvv : " + Cvv);
                         // this api not working instead simple payment one is invoked i don't know how?
                         const response = await axios.post(`${BASE_URL}/user/courses/Test/` + String(courseId.courseId), {
                                 username: name,
@@ -159,8 +160,10 @@ function CreditDetails(courseId) {
                                 }
                             })
                             const route = response.data.message
+                            console.log(route);
                             navigate(`/course/${route}/Test`);
                         }
+                        console.log(response.data);
                     }}
                 > Pay For Test</Button>
         </div>
