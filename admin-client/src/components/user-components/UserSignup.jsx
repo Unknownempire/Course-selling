@@ -11,6 +11,7 @@ import {userState} from "../../store/atoms/user.js";
 function UserSignup() {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
+    const [fullName, setFullName] = useState("");
     const navigate = useNavigate()
     const setUser = useSetRecoilState(userState);
 
@@ -27,6 +28,15 @@ function UserSignup() {
             </div>
         <div style={{display: "flex", justifyContent: "center"}}>
             <Card varint={"outlined"} style={{width: 400, padding: 20}}>
+                <TextField
+                    onChange={(event) => {
+                        setFullName(event.target.value);
+                    }}
+                    fullWidth={true}
+                    label="FullName"
+                    variant="outlined"
+                />
+                <br/><br/>
                 <TextField
                     onChange={(event) => {
                         setEmail(event.target.value);
@@ -54,11 +64,13 @@ function UserSignup() {
                         try {
                             const response = await axios.post(`${BASE_URL}/user/signup`, {
                                 username: email,
-                                password: password
+                                password: password,
+                                fullName: fullName
                             });
                             const data = response.data;
+                            console.log('data = ',data);
                             localStorage.setItem("token", data.token);
-                            setUser({ userEmail: email, isLoading: false })
+                            setUser({ userEmail: email, isLoading: false,userFullName: fullName })
                             navigate("/courses")
                         } catch (error) {
                             if (error.response && error.response.status === 411) {
