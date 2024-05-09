@@ -13,14 +13,17 @@ router.get("/me", authenticateJwt, async (req, res) => {
       res.status(403).json({msg: "Admin doesnt exist"})
       return
     }
+    console.log('hello');
     res.json({
-        username: user.username
+        username: user.username,
+        fullname : user.fullName
     })
 });
 
 const signupInput = z.object({
   username: z.string().min(10).max(50),
-  password: z.string().min(8).max(20)
+  password: z.string().min(8).max(20),
+  fullName: z.string().min(1).max(100)
 })
 
 router.post('/signup', async (req, res) => {
@@ -32,14 +35,15 @@ router.post('/signup', async (req, res) => {
   }
   const username = parsedInput.data.username;
   const password = parsedInput.data.password;
-
+  const fullName = parsedInput.data.fullName;
+  console.log(fullName);
 // -----
   // const { username, password } = req.body;
   const user = await User.findOne({ username });
   if (user) {
     res.status(403).json({ message: 'User already exists' });
   } else {
-    const newUser = new User({ username, password });
+    const newUser = new User({ username, password, fullName });
     await newUser.save();
     const token = jwt.sign({ username, role: 'user' }, SECRET, { expiresIn: '1h' });
     res.json({ message: 'User created successfully', token });
