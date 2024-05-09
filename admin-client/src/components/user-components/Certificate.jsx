@@ -1,13 +1,27 @@
 import React from 'react';
 import certificateImage from "../../assets/images/Course_Certificate.png"
 import { Button, Typography } from '@mui/material';
-import { useRef, useEffect } from 'react';
+import { useRef, useEffect, useState } from 'react';
 import DownloadIcon from '@mui/icons-material/Download';
 import { useRecoilValue } from 'recoil';
-import { userEmailState } from '../../store/selectors/userEmail';
+import { userFullNameState } from '../../store/selectors/userFullName';
+import Snackbar from '@mui/material/Snackbar';
+import Alert from '@mui/material/Alert';
 
 const CanvasImageLoader = ({ imageUrl,extraText }) => {
   const canvasRef = useRef(null);
+  const [open, setOpen] = useState(false);
+  const handleClick = () => {
+    setOpen(!open);
+  };
+
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setOpen(false);
+  };
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -25,49 +39,64 @@ const CanvasImageLoader = ({ imageUrl,extraText }) => {
       ctx.textAlign = 'center';
       ctx.fillText(extraText, 440, 332);
     };
-      image.src = imageUrl;
-  }, [imageUrl,extraText]);
+    image.src = imageUrl;
+  }, [imageUrl, extraText]);
 
-    const handleDownload = () => {
-        const canvas = canvasRef.current;
-        const dataUrl = canvas.toDataURL('image/png');
-        const link = document.createElement('a');
-        link.download = 'Certificate.png';
-        link.href = dataUrl;
-        link.click();
-    };
+  const handleDownload = () => {
+    const canvas = canvasRef.current;
+    const dataUrl = canvas.toDataURL('image/png');
+    const link = document.createElement('a');
+    link.download = 'Certificate.png';
+    link.href = dataUrl;
+    link.click();
+  };
   return (
-      <div style={{
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        flexDirection: 'column',
-      }}>
-          <div>
-              <canvas ref={canvasRef} width={900} height={600} />
-          </div>
-          <br />
-          <Button variant={"contained"}onClick={handleDownload}><DownloadIcon></DownloadIcon>Download</Button>
-          <br /><br />
+    <div style={{
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      flexDirection: 'column',
+    }}>
+      <div>
+        <canvas ref={canvasRef} width={900} height={600} />
       </div>
+      <br />
+      <Button variant={"contained"} onClick={() => {
+        handleDownload()
+        handleClick()
+      }}>
+        <Snackbar open={open} autoHideDuration={1000} onClose={handleClose}>
+          <Alert
+            onClose={handleClose}
+            severity="success"
+            variant="filled"
+            sx={{ width: '100%' }}
+          >
+            Downloaded
+          </Alert>
+        </Snackbar>
+        <DownloadIcon></DownloadIcon>Download Certificate</Button>
+      <br /><br />
+    </div>
   );
 };
 
 
 const CertificateIssuer = () => {
-    const imageUrl = certificateImage;
-    const name = 'John'
-    const userEmail = useRecoilValue(userEmailState);
-    console.log(userEmail);
+  const imageUrl = certificateImage;
+  const userFullName = useRecoilValue(userFullNameState);
 
-
-    return (
-        <div>
-            <Typography variant='h4'>Certificate Preview</Typography>
-            <CanvasImageLoader imageUrl={imageUrl} extraText={`${userEmail} for successfully completing the course`} />
-            <Typography>{userEmail}</Typography>
-        </div>
-    );
+  return (
+    <div style={{
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'center',
+      alignItems: 'center',
+    }}>
+      <Typography variant='h4'>Certificate Preview</Typography>
+      <CanvasImageLoader imageUrl={imageUrl} extraText={`${userFullName} for successfully completing the course`} />
+    </div>
+  );
 
 }
 
