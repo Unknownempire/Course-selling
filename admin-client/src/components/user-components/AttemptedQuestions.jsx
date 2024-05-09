@@ -20,7 +20,11 @@ const AttemptedQuestions = ({ responses }) => {
         <div style={{
             backgroundColor: 'white',
             borderRadius: '10px',
-            border: '2px solid lightblue',
+            marginBottom: '2rem',
+            // boxShadow: '#04e9fc 0px 0px 5px 0px',
+            // boxShadow: '0 0 10px #04e9fc, 0 0 20px #04e9fc, 0 0 40px #04e9fc, 0 0 80px #04e9fc',
+            // boxShadow: 'rgb(229 253 255) 0px 0px 1px, rgb(243 243 243) 0px 0px 2px, rgb(4, 233, 252) 0px 0px 8px 0px, rgb(6 221 239) 0px 0px 2px',
+            border: '1px solid lightblue',
             padding: '2rem',
         }}>
             <ToggleButtonGroup
@@ -74,9 +78,9 @@ const Toggles = ({ responses, alignment }) => {
                     <div style={{
                         display: 'flex',
                         flexDirection: 'column',
-                        border: '2px solid gray',
+                        // border: '2px solid gray',
                         borderRadius: '10px',
-                        marginBottom: '0.4rem',
+                        marginBottom: '0.5rem',
                         padding: '1rem',
                         backgroundColor: '#f2f2f2'
                     }}>
@@ -110,9 +114,10 @@ const Toggles = ({ responses, alignment }) => {
                     <div style={{
                         display: 'flex',
                         flexDirection: 'column',
-                        border: '2px solid green',
+                        // border: '2px solid green',
+                        // boxShadow: 'rgb(229 253 255) 0px 0px 1px, rgb(243 243 243) 0px 0px 2px, rgb(4, 233, 252) 0px 0px 8px 0px, rgb(6 221 239) 0px 0px 2px',
                         borderRadius: '10px',
-                        marginBottom: '0.2rem',
+                        marginBottom: '0.5rem',
                         padding: '1rem',
                         backgroundColor: '#f2f2f2'
                     }}>
@@ -137,9 +142,9 @@ const Toggles = ({ responses, alignment }) => {
                     <div style={{
                         display: 'flex',
                         flexDirection: 'column',
-                        border: '2px solid red',
+                        // border: '2px solid red',
                         borderRadius: '10px',
-                        marginBottom: '0.2rem',
+                        marginBottom: '0.5rem',
                         padding: '1rem',
                         backgroundColor: '#f2f2f2'
                     }}>
