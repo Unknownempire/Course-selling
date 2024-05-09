@@ -30,6 +30,7 @@ import CourseTest from './components/Courses-components/CourseTest.jsx';
 
 //Result
 import Results from './components/user-components/Results.jsx';
+import CertificateIssuer from './components/user-components/Certificate.jsx';
 
 import {
     RecoilRoot,
@@ -83,6 +84,7 @@ function App() {
                             {/* <Route path={"/course/BlockChainforBeginner/Test"} element={<BlockChainTestPage />} /> */}
                             {/* Results */}
                             <Route path={"/course/learn/result"} element={<Results></Results>} />
+                            <Route path={"/course/learn/certificate"} element={<CertificateIssuer></CertificateIssuer>} />
 
                         </Routes>
                     </Router>
@@ -96,7 +98,8 @@ function InitUser() {
     const setUser = useSetRecoilState(userState);
     const init = async() => {
         try {
-            const response = await axios.get(`${BASE_URL}/admin/me`, {
+            // const response = await axios.get(`${BASE_URL}/admin/me`, {
+            const response = await axios.get(`${BASE_URL}/user/me`, {
                 headers: {
                     "Authorization": "Bearer " + localStorage.getItem("token")
                 }
