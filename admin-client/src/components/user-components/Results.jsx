@@ -13,6 +13,7 @@ import DownloadIcon from '@mui/icons-material/Download';
 import CheckIcon from '@mui/icons-material/Check';
 import DangerousIcon from '@mui/icons-material/Dangerous';
 import QuizIcon from '@mui/icons-material/Quiz';
+import VisibilityIcon from '@mui/icons-material/Visibility';
 import AttemptedQuestions from "./AttemptedQuestions.jsx";
 // import { TestQuestions } from "../../../../server/db/index.js";
 
@@ -209,7 +210,8 @@ const Results = () => {
                             marginTop: '3%',
                         }}>
                             {score > 50 ? (
-                                <Button variant="contained" color="primary" sx={{
+                                <>
+                                {/* <Button variant="contained" color="primary" sx={{
                                     textAlign: 'center',
                                 }} onClick={handleClick}>
                                     <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
@@ -222,14 +224,35 @@ const Results = () => {
                                             Downloading
                                         </Alert>
                                     </Snackbar>
-                                    <DownloadIcon></DownloadIcon>
+                                    <DownloadIcon></DownloadIcon> */}
                                     {/* <Button variant="contained" color="primary" onClick={handleReturnHome}> */}
                                     {/* <img width="20" height="18" src="https://img.icons8.com/fluency-systems-filled/48/download.png" alt="download" style={{
                                         marginRight: '8px',
                                         marginBottom: '3px'
                                     }}/> */}
-                                    Download Certificate
+                                    {/* Download Certificate
+                                </Button> */}
+                                <Button variant="contained" color="primary" sx={{
+                                    textAlign: 'center',
+                                }} 
+                                onClick={() => {
+                                    navigate("/course/learn/certificate")
+                                }}
+                                >
+                                    {/* <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+                                        <Alert
+                                            onClose={handleClose}
+                                            severity="success"
+                                            variant="filled"
+                                            sx={{ width: '100%' }}
+                                        >
+                                            Downloading
+                                        </Alert>
+                                    </Snackbar> */}
+                                    <VisibilityIcon></VisibilityIcon>  
+                                    Preview Certificate
                                 </Button>
+                                </>
                             ) : (
                                 <Button variant="contained" color="primary" sx={{ textAlign: 'center' }} onClick={async () => {
 
