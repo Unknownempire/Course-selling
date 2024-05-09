@@ -6,17 +6,17 @@ const router = express.Router();
 const z = require('zod');
 
 
-//not tested yet
-// router.get("/me", authenticateJwt, async (req, res) => {
-//     const user = await User.findOne({ username: req.user.username });
-//     if (!user) {
-//       res.status(403).json({msg: "Admin doesnt exist"})
-//       return
-//     }
-//     res.json({
-//         username: user.username
-//     })
-// });
+// not tested yet
+router.get("/me", authenticateJwt, async (req, res) => {
+    const user = await User.findOne({ username: req.user.username });
+    if (!user) {
+      res.status(403).json({msg: "Admin doesnt exist"})
+      return
+    }
+    res.json({
+        username: user.username
+    })
+});
 
 const signupInput = z.object({
   username: z.string().min(10).max(50),
