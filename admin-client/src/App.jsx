@@ -106,14 +106,17 @@ function InitUser() {
             })
 
             if (response.data.username) {
+                console.log('response = ', response.data);
                 setUser({
                     isLoading: false,
-                    userEmail: response.data.username
+                    userEmail: response.data.username,
+                    userFullName: response.data.fullname,
                 })
             } else {
                 setUser({
                     isLoading: false,
-                    userEmail: null
+                    userEmail: null,
+                    userFullName: null
                 })
             }
         } catch (e) {
