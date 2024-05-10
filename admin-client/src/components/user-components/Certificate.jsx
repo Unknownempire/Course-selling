@@ -7,6 +7,9 @@ import { useRecoilValue } from 'recoil';
 import { userFullNameState } from '../../store/selectors/userFullName';
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
+import { courseTitle } from '../../store/selectors/course';
+import axios from 'axios';
+import { BASE_URL } from '../../config';
 
 const CanvasImageLoader = ({ imageUrl,extraText }) => {
   const canvasRef = useRef(null);
@@ -58,7 +61,9 @@ const CanvasImageLoader = ({ imageUrl,extraText }) => {
       flexDirection: 'column',
     }}>
       <div>
-        <canvas ref={canvasRef} width={900} height={600} />
+        <canvas ref={canvasRef} style={{
+          borderRadius: '5px',
+        }} width={900} height={600} />
       </div>
       <br />
       <Button variant={"contained"} onClick={() => {
@@ -85,6 +90,27 @@ const CanvasImageLoader = ({ imageUrl,extraText }) => {
 const CertificateIssuer = () => {
   const imageUrl = certificateImage;
   const userFullName = useRecoilValue(userFullNameState);
+  const [title,setTitle]= useState('');
+  console.log('title = ', title);
+  const courseId = localStorage.getItem('courseid')
+
+  const init = async() => {
+    const response = await axios.get(`${BASE_URL}/admin/course/${courseId}`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`
+      }
+    })
+    const data = response.data;
+    console.log('data = ',data.course);
+    setTitle(data.course.title)
+  }
+
+  useEffect(() => {
+    init();
+  },[]);
+
+
+
 
   return (
     <div style={{
@@ -94,7 +120,7 @@ const CertificateIssuer = () => {
       alignItems: 'center',
     }}>
       <Typography variant='h4'>Certificate Preview</Typography>
-      <CanvasImageLoader imageUrl={imageUrl} extraText={`${userFullName} for successfully completing the course`} />
+      <CanvasImageLoader imageUrl={imageUrl} extraText={`${userFullName} for successfully completing the "${title}" course`} />
     </div>
   );
 
