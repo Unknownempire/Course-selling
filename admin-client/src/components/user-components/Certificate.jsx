@@ -63,6 +63,7 @@ const CanvasImageLoader = ({ imageUrl,extraText }) => {
       <div>
         <canvas ref={canvasRef} style={{
           borderRadius: '5px',
+          border: '2px solid #1565c0',
         }} width={900} height={600} />
       </div>
       <br />
@@ -120,6 +121,7 @@ const CertificateIssuer = () => {
       alignItems: 'center',
     }}>
       <Typography variant='h4'>Certificate Preview</Typography>
+      <br />
       <CanvasImageLoader imageUrl={imageUrl} extraText={`${userFullName} for successfully completing the "${title}" course`} />
     </div>
   );
