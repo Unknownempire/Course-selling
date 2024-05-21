@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Box, Container, Divider, Typography, Stack, Pagination, Card, Tab} from "@mui/material";
 import { useNavigate } from 'react-router-dom';
 import Accordion from '@mui/material/Accordion';
@@ -11,10 +11,32 @@ import axios from 'axios';
 
 export default function VueContent() {
     const [currentPage, setCurrentPage] = useState(1);
+    const [result,setResult] = useState(false);
 
     const handleChange = (event, value) => {
         setCurrentPage(value);
     }
+
+    const init = async() => {
+        const courseId = localStorage.getItem('courseid');
+        const response = await axios.post(`${BASE_URL}/user/learn/Test/result`, {
+            courseId: courseId
+        }, {
+            headers: {
+                "Content-type": "application/json",
+                "Authorization": "Bearer " + localStorage.getItem("token")
+            }
+        })
+        const attempts = response.data.attempts;
+        if(attempts !== 0) {
+            setResult(true);
+        }
+        console.log('attempts : ',attempts);
+    }
+
+    useEffect(() => {
+        init();
+    },[]);
 
     const renderComponent = () => {
         switch (currentPage) {
@@ -80,7 +102,7 @@ export default function VueContent() {
                 position:'fixed',
                 right:'1rem',
             }}>
-                <ContentTable setCurrentPage={setCurrentPage}/>
+                <ContentTable setCurrentPage={setCurrentPage} result={result}/>
             </div>
         </div>
     );
@@ -550,7 +572,7 @@ This is just a basic example showing the linking of VueJS with DOM, and how we c
     )
 }
 
-function ContentTable({setCurrentPage}) {
+function ContentTable({setCurrentPage,result}) {
     const navigate = useNavigate();
     return (
         <div>
@@ -633,24 +655,36 @@ function ContentTable({setCurrentPage}) {
                             borderRadius:'0.2rem',
                             paddingLeft: '0.3rem',
                     }} onClick={async() => {
-                                const result = window.confirm('Do you want to attempt the test');
-                                const courseId = localStorage.getItem('courseid')
-                                if (result === true) {
-                                    const response = await axios.get(`${BASE_URL}/user/learn/Test/` + String(courseId),
-                                        {
-                                            headers: {
-                                                "Content-type": "application/json",
-                                                "Authorization": "Bearer " + localStorage.getItem("token")
-                                            }
+                                // const result = window.confirm('Do you want to attempt the test');
+                                // const courseId = localStorage.getItem('courseid')
+                                // if (result === true) {
+                                //     const response = await axios.get(`${BASE_URL}/user/learn/Test/` + String(courseId),
+                                //         {
+                                //             headers: {
+                                //                 "Content-type": "application/json",
+                                //                 "Authorization": "Bearer " + localStorage.getItem("token")
+                                //             }
 
-                                        })
-                                    if (response.data.attempts === 0) {
+                                //         })
+                                //     if (response.data.attempts === 0) {
+                                //         navigate("Test");
+                                //     } else {
+                                //         alert("Test already Attempted");
+                                //         navigate("/repayment/" + courseId);
+                                //     }
+                                // }
+                                const TestAttempt = window.confirm('Do you want to attempt the test');
+                                const courseId = localStorage.getItem('courseid')
+
+                                if(TestAttempt === true) {
+                                    if(result === false) {
                                         navigate("Test");
                                     } else {
                                         alert("Test already Attempted");
                                         navigate("/repayment/" + courseId);
                                     }
                                 }
+
                                 // if (result === true) {
                                 //     const courseId = localStorage.getItem('courseid');
                                 //     const resAttempt = await axios.get(`${BASE_URL}/user/submit/${courseId}/attempt`, {
@@ -677,6 +711,27 @@ function ContentTable({setCurrentPage}) {
                                 e.target.style.boxShadow = '';
                             }}
                         >Test</Typography>
+
+                        {result ? (
+                        <Typography paragraph='true' sx={{
+                            cursor: 'pointer',
+                            textDecoration: 'underline',
+                            borderRadius: '0.2rem',
+                            paddingLeft: '0.3rem',
+                        }} onClick={() => navigate("/course/learn/result")}
+                            onMouseEnter={(e) => {
+                                e.target.style.backgroundColor = 'rgb(86, 153, 219)';
+                                e.target.style.boxShadow = '0 0 5px rgba(0, 0, 0, 0.3)';
+                            }}
+                            onMouseLeave={(e) => {
+                                e.target.style.backgroundColor = '';
+                                e.target.style.boxShadow = '';
+                            }}
+                        >Result</Typography>
+
+                        ):(
+                            <Typography></Typography>
+                        )}
                     </Card>
                 </Container>
             </aside>
