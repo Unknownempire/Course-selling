@@ -4,10 +4,15 @@ import {useNavigate} from "react-router-dom";
 import { BASE_URL } from "../../config.js";
 import  Loading  from "./Loading.jsx";
 import axios from "axios";
+import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 
 function UserCourses() {
     const [courses, setCourses] = useState([]);
     const [loading, setLoading] = useState(true);
+    const navigate = useNavigate
+    const handleClick = () => {
+        alert('Courses are available on Courses tab')
+    }
 
 
     const init = async () => {
@@ -45,12 +50,13 @@ function UserCourses() {
                 flexDirection:'column',
                 justifyContent:'center',
                 alignItems:'center',
-                height: '100%',
+                height: '90%',
             }}>
                 {/* <Typography variant="h4">¯_(ツ)_/¯</Typography> */}
-                <Typography variant="h4">😢💔</Typography>
-                <Typography variant="h4"></Typography>
-                <Typography variant="h6">Emptiness</Typography>
+                <Typography variant="h6" style={{
+                    cursor: 'pointer'
+                }} onClick={handleClick}><AddShoppingCartIcon style={{fontSize:'4rem'}}></AddShoppingCartIcon></Typography>
+                <Typography variant="h6">No Courses Purchased</Typography>
                 <image src=""></image>
             </div>
         )
