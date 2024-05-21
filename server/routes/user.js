@@ -13,7 +13,7 @@ router.get("/me", authenticateJwt, async (req, res) => {
       res.status(403).json({msg: "Admin doesnt exist"})
       return
     }
-    console.log('hello');
+    console.log('hello', user.fullName);
     res.json({
         username: user.username,
         fullname : user.fullName
@@ -55,7 +55,7 @@ router.post('/login', async (req, res) => {
   const user = await User.findOne({ username, password });
   if (user) {
     const token = jwt.sign({ username, role: 'user' }, SECRET, { expiresIn: '1h' });
-    res.json({ message: 'Logged in successfully', token });
+    res.json({ message: 'Logged in successfully', token, fullName: user.fullName });
   } else {
     res.status(403).json({ message: 'Invalid username or password' });
   }
@@ -230,9 +230,11 @@ router.post('/learn/Test/result', authenticateJwt, async(req,res) => {
       } else {
         let score = userAttempt.courses[courseIndex].score;
         let responses = userAttempt.courses[courseIndex].responses;
+        let attempts = userAttempt.courses[courseIndex].attempts
         res.json({
           score: score,
           responses: responses,
+          attempts: attempts,
         });
         return;
       }
