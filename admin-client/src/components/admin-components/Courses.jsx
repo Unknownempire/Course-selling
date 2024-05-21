@@ -1,11 +1,13 @@
 import { Button, Card, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useRecoilValue } from "recoil";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import { BASE_URL } from "../../config.js";
 import { isadminState } from "../../store/atoms/isadmin.js";
 import {Loading} from "./Loading.jsx";
 import axios from "axios";
+import { courseState } from "../../store/atoms/course.js";
+import { courseTitle } from "../../store/selectors/course.js";
 
 function Courses() {
     const [courses, setCourses] = useState([]);
@@ -62,6 +64,13 @@ function Courses() {
 export function Course({ course, purchased }) {
     const navigate = useNavigate();
     const isAdmin = useRecoilValue(isadminState);
+    // const [courses, setCourse]= useRecoilState(courseState);
+    // const title = useRecoilValue(courseTitle);
+    
+
+
+
+    // console.log(title)
     // const [purchasedCourses, setPurchasedCourses] = useState([])
 
     // if (!isAdmin) {
@@ -93,7 +102,9 @@ export function Course({ course, purchased }) {
         // minHeight: 200,
         height: 400,
         padding: 20,
-        position: 'relative'
+        display:'flex',
+        flexDirection: 'column',
+        justifyContent: 'space-evenly'
     }}>
         <Typography textAlign={"center"} variant="h5">{course.title}</Typography>
         <Typography textAlign={"center"} variant="subtitle1">{course.description}</Typography>
@@ -102,20 +113,20 @@ export function Course({ course, purchased }) {
             justifyContent: 'center',
             alignItems: 'center',
             // border:'2px solid red',
-            padding: 20,
+            // padding: 20,
         }}>
             <img src={course.imageLink} style={{
-                width: 300,
+                minWidth: 200,
                 height: 200,
-                marginBottom: '20px',
+                // marginBottom: '20px',
             }} ></img>
         </div>
         <div style={{
-            position: 'absolute',
-            bottom: 10, // Adjust as needed
-            left: 0,
-            right: 0,
-            textAlign: 'center'
+            // position: 'absolute',
+            // bottom: 10, // Adjust as needed
+            // left: 0,
+            // right: 0,
+            // textAlign: 'center'
         }}>
             <div style={{
                 display: "flex",
@@ -123,16 +134,43 @@ export function Course({ course, purchased }) {
                 marginTop: 20,
             }}>
                 {isAdmin ? (
-                    <Button variant="contained" size="large" onClick={() => {
+                    <Button variant="contained" size="large" onClick={async() => {
                         // navigate("/course/" + course._id);
-                        alert("Contents Coming Soon..")
+                            const response = await axios.get(`${BASE_URL}/user/learn/` + String(course._id), {
+                                headers: {
+                                    Authorization: `Bearer ${localStorage.getItem('token')}`
+                                }
+                            })
+                                    const route = response.data.message
+                                    localStorage.setItem('courseid', course._id);
+                                    // const courseId = localStorage.getItem('courseid');
+                                    // const resAttempt = await axios.get(`${BASE_URL}/user/learn/${courseId}/attempt`, {
+                                    //     headers: {
+                                    //         Authorization: `Bearer ${localStorage.getItem('token')}`
+                                    //     }
+                                    // });
+
+                                    // console.log(resAttempt);
+
+                                //    await setCourse({
+                                //         isLoading: false,
+                                //         course: {'title': course.title},
+                                //     })
+                                //     console.log(courses);
+                                //     console.log('title = ',courses.title);
+
+                                    navigate("/course/" + route);
+                                    // alert('route ' + route);
+                                    // navigate("/course/" + route);
+                            // console.log(course._id);
+                        // alert("Contents Coming Soon..")
                     }}>View</Button>
                 ) : (
                     purchased === 0 ? (
                         <Button variant="contained" size="large" onClick={async () => {
                             const courseId = course._id;
                             navigate("/payment/" + courseId);
-                        }}>Purchase</Button>
+                        }}>₹ {course.price}</Button>
                     ) : (
                         <Button variant="contained" color="success" size="large" onClick={async () => {
                             const response = await axios.get(`${BASE_URL}/user/learn/` + String(course._id), {
@@ -140,20 +178,27 @@ export function Course({ course, purchased }) {
                                     Authorization: `Bearer ${localStorage.getItem('token')}`
                                 }
                             })
-                            const route = response.data.message
-                            localStorage.setItem('courseid', course._id);
-                            // const courseId = localStorage.getItem('courseid');
-                            // const resAttempt = await axios.get(`${BASE_URL}/user/learn/${courseId}/attempt`, {
-                            //     headers: {
-                            //         Authorization: `Bearer ${localStorage.getItem('token')}`
-                            //     }
-                            // });
+                                    const route = response.data.message
+                                    localStorage.setItem('courseid', course._id);
+                                    // const courseId = localStorage.getItem('courseid');
+                                    // const resAttempt = await axios.get(`${BASE_URL}/user/learn/${courseId}/attempt`, {
+                                    //     headers: {
+                                    //         Authorization: `Bearer ${localStorage.getItem('token')}`
+                                    //     }
+                                    // });
 
-                            // console.log(resAttempt);
+                                    // console.log(resAttempt);
 
-                            navigate("/course/" + route);
-                            // alert('route ' + route);
-                            // navigate("/course/" + route);
+                                //    await setCourse({
+                                //         isLoading: false,
+                                //         course: {'title': course.title},
+                                //     })
+                                //     console.log(courses);
+                                //     console.log('title = ',courses.title);
+
+                                    navigate("/course/" + route);
+                                    // alert('route ' + route);
+                                    // navigate("/course/" + route);
                             // console.log(course._id);
                         }}>View</Button>
                     )

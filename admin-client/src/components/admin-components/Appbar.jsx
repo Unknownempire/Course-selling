@@ -7,15 +7,22 @@ import { userState } from "../../store/atoms/user.js";
 import { userEmailState } from "../../store/selectors/userEmail.js"
 import { isadminState } from "../../store/atoms/isadmin.js";
 import { useEffect } from "react";
+import SearchIcon from '@mui/icons-material/Search';
+import TextField from '@mui/material/TextField';
 import { useLocation } from 'react-router-dom';
+import { CourseSearchTextField } from "./CourseSearchTextField.jsx";
+import { userFullNameState } from "../../store/selectors/userFullName.js";
 // import { useParams } from "react-router-dom";
 
 function Appbar({ }) {
     const navigate = useNavigate()
     const userLoading = useRecoilValue(isUserLoading);
     const userEmail = useRecoilValue(userEmailState);
+    const userFullName = useRecoilValue(userFullNameState);
     const setUser = useSetRecoilState(userState);
     const [isAdmin,setIsAdmin] = useRecoilState(isadminState);
+    console.log('full name : ', userFullName);
+    console.log('email : ', userEmail);
     
     const currentRoute = location.pathname;
     useEffect(() => {
@@ -28,15 +35,13 @@ function Appbar({ }) {
         return <></>
     }
     if (isAdmin) {
-
         if (userEmail) {
             return <div style={{
                 display: "flex",
                 justifyContent: "space-between",
-                padding: 4,
+                paddingTop: "0.7rem",
+                paddingBottom: "0.7rem",
                 zIndex: 1,
-                // borderBottom: '0.3px solid black',
-                // background:'#b4dbff',
             }}>
                 <div style={{ marginLeft: 10, cursor: "pointer" }} onClick={() => {
                     navigate("/")
@@ -88,8 +93,8 @@ function Appbar({ }) {
             return <div style={{
                 display: "flex",
                 justifyContent: "space-between",
-                padding: 4,
-                zIndex: 1,
+                paddingTop: "0.7rem",
+                paddingBottom: "0.7rem",
                 // borderBottom: '0.3px solid #a7a7a7',
                 // background:'#b4dbff',
                 // background:'#dbedff'
@@ -117,7 +122,7 @@ function Appbar({ }) {
                             onClick={() => {
                                 navigate("/signin")
                             }}
-                        >Signin</Button>
+                        >Sign in</Button>
                     </div>
                 </div>
             </div>
@@ -127,7 +132,8 @@ function Appbar({ }) {
             return <div style={{
                 display: "flex",
                 justifyContent: "space-between",
-                padding: 4,
+                paddingTop: "0.7rem",
+                paddingBottom: "0.7rem",
                 zIndex: 1,
                 // borderBottom: '0.3px solid black',
                 // background:'#b4dbff',
@@ -148,6 +154,8 @@ function Appbar({ }) {
                                 // }}
                             >{userEmail}</Button>
                         </div>
+
+                        <CourseSearchTextField />
 
                         <div style={{ marginRight: 10 }}>
                             <Button
@@ -183,7 +191,8 @@ function Appbar({ }) {
             return <div style={{
                 display: "flex",
                 justifyContent: "space-between",
-                padding: 4,
+                paddingTop: "0.7rem",
+                paddingBottom: "0.7rem",
                 zIndex: 1,
                 // borderBottom: '0.3px solid black',
                 // background:'#b4dbff',
