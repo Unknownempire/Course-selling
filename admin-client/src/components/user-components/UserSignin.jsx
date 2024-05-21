@@ -10,6 +10,7 @@ import {userState} from "../../store/atoms/user.js";
 // import {SimpleAlert} from "./SimpleAlert.jsx";
 function UserSignin() {
     const [email, setEmail] = useState("")
+    const [fullName, setFullName] = useState("")
     const [password, setPassword] = useState("")
     const navigate = useNavigate()
     const setUser = useSetRecoilState(userState);
@@ -61,11 +62,14 @@ function UserSignin() {
                             }
                         });
                         const data = res.data;
+                        console.log(data);
+                        // await setFullName(data.fullName);
 
                         localStorage.setItem("token", data.token);
                         // window.location = "/"
                         setUser({
                             userEmail: email,
+                            userFullName: data.fullName,
                             isLoading: false
                         })
 
