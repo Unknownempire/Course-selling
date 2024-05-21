@@ -1,6 +1,6 @@
 import { Card, Grid } from "@mui/material";
 import { useEffect, useState } from "react"
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Typography, TextField, Button } from "@mui/material";
 import axios from "axios";
 import {Loading} from "./Loading.jsx";
@@ -8,6 +8,7 @@ import { BASE_URL } from "../../config.js";
 import { courseState } from "../../store/atoms/course.js";
 import {useRecoilState, useRecoilValue, useSetRecoilState} from "recoil";
 import { courseTitle, coursePrice, isCourseLoading, courseImage, courseDetails } from "../../store/selectors/course.js";
+import InputMask from 'react-input-mask';
 
 function Payment() {
     let { courseId } = useParams();
@@ -67,6 +68,7 @@ function GrayTopper() {
 
 function CreditDetails(courseId) {
     const [courseDetail, setCourse] = useRecoilState(courseState);
+    const navigate = useNavigate();
 
     // const course_detail = useRecoilValue(courseDetails)
     const [name, setName] = useState('');
@@ -105,7 +107,7 @@ function CreditDetails(courseId) {
                 variant="outlined"
             />
 
-            <TextField
+            {/* <TextField
                 // value={}
                 style={{marginBottom: 10}}
                 onChange={(e) => {
@@ -114,18 +116,34 @@ function CreditDetails(courseId) {
                 fullWidth={true}
                 label="Expiry Date"
                 variant="outlined"
-            />
+            /> */}
+                <InputMask
+                    mask="99/99"
+                    value={expirydate}
+                    onChange={(e) => setExpiryDate(e.target.value)}
+                    maskChar={null}
+                >
+                    {(inputProps) => (
+                        <TextField
+                            {...inputProps}
+                            style={{ marginBottom: 10 }}
+                            fullWidth
+                            label="Expiry Date"
+                            variant="outlined"
+                        />
+                    )}
+                </InputMask>
 
-            <TextField
-                // value={image}
-                style={{marginBottom: 10}}
-                onChange={(e) => {
-                    setCvv(e.target.value)
-                }}
-                fullWidth={true}
-                label="CVV"
-                variant="outlined"
-            />
+                <TextField
+                    // value={image}
+                    style={{ marginBottom: 10 }}
+                    onChange={(e) => {
+                        setCvv(e.target.value)
+                    }}
+                    fullWidth={true}
+                    label="CVV"
+                    variant="outlined"
+                />
                 <Button
                     variant="contained"
                     onClick={async () => {
@@ -137,7 +155,7 @@ function CreditDetails(courseId) {
                         // console.log(course_detail._id);
                         // console.log('courseId = '+ courseId);
                         try {
-                            axios.post(`${BASE_URL}/user/courses/` + courseId.courseId, {
+                            const response = await axios.post(`${BASE_URL}/user/courses/` + courseId.courseId, {
                                 username: name,
                                 cardNumber: creditNumber,
                                 expiryDate: expirydate,
@@ -148,37 +166,67 @@ function CreditDetails(courseId) {
                                     "Authorization": "Bearer " + localStorage.getItem("token")
                                 }
                             });
+
+                            // console.log(response.data.message);
+                            alert(response.data.message);
+                            if (response.data.message === "Course purchased successfully") {
+                                const res = await axios.get(`${BASE_URL}/user/learn/` + String(courseId.courseId), {
+                                    headers: {
+                                        Authorization: `Bearer ${localStorage.getItem('token')}`
+                                    }
+                                })
+                                const route = res.data.message
+                                // localStorage.setItem('courseid', course._id);
+                                console.log(route)
+
+                                navigate("/course/" + route);
+
+                            }
+
+                            // const response = await axios.get(`${BASE_URL}/user/learn/` + String(courseId.courseId), {
+                            //     headers: {
+                            //         Authorization: `Bearer ${localStorage.getItem('token')}`
+                            //     }
+                            // })
+                            // const route = response.data.message
+                            // // localStorage.setItem('courseid', course._id);
+                            // console.log(route)
+
+                            // navigate("/course/" + route);
+
+
                         } catch (error) {
                             console.error("Error:", error)
+                            alert("Either Name, credit card number, expiry date or cvv is incorrect");
 
                         }
                     }}
                 > Pay</Button>
-        </div>
-    </Card>
-</div>
+            </div>
+        </Card>
+    </div>
 }
 
 function CourseCard(props) {
     const title = useRecoilValue(courseTitle);
     const imageLink = useRecoilValue(courseImage);
 
-    return <div style={{display: "flex",  marginTop: 50, justifyContent: "center", width: "100%"}}>
-     <Card style={{
-        margin: 10,
-        width: 350,
-        minHeight: 200,
-        borderRadius: 20,
-        marginRight: 50,
-        paddingBottom: 15,
-        zIndex: 2
-    }}>
-        <img src={imageLink} style={{width: 350}} ></img>
-        <div style={{marginLeft: 10}}>
-            <Typography variant="h5">{title}</Typography>
-            <Price />
-        </div>
-    </Card>
+    return <div style={{ display: "flex", marginTop: 50, justifyContent: "center", width: "100%" }}>
+        <Card style={{
+            margin: 10,
+            width: 350,
+            minHeight: 200,
+            borderRadius: 20,
+            marginRight: 50,
+            paddingBottom: 15,
+            zIndex: 2
+        }}>
+            <img src={imageLink} style={{ width: 350 }} ></img>
+            <div style={{ marginLeft: 10 }}>
+                <Typography variant="h5">{title}</Typography>
+                <Price />
+            </div>
+        </Card>
     </div>
 }
 
@@ -186,7 +234,7 @@ function Price() {
 
     const price = useRecoilValue(coursePrice);
     return <>
-        <Typography variant="subtitle2" style={{color: "gray"}}>
+        <Typography variant="subtitle2" style={{ color: "gray" }}>
             Price
         </Typography>
         <Typography variant="subtitle1">

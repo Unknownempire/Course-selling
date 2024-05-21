@@ -9,6 +9,7 @@ import {useNavigate} from "react-router-dom";
 import { courseState } from "../../store/atoms/course.js";
 import {useRecoilState, useRecoilValue, useSetRecoilState} from "recoil";
 import { courseTitle, coursePrice, isCourseLoading, courseImage, courseDetails } from "../../store/selectors/course.js";
+import InputMask from 'react-input-mask';
 // import SimpleAlert from "./SimpleAlert.jsx";
 
 function TestPayment() {
@@ -108,7 +109,7 @@ function CreditDetails(courseId) {
                 variant="outlined"
             />
 
-            <TextField
+            {/* <TextField
                 // value={}
                 style={{marginBottom: 10}}
                 onChange={(e) => {
@@ -117,7 +118,23 @@ function CreditDetails(courseId) {
                 fullWidth={true}
                 label="Expiry Date"
                 variant="outlined"
-            />
+            /> */}
+                <InputMask
+                    mask="99/99"
+                    value={expirydate}
+                    onChange={(e) => setExpiryDate(e.target.value)}
+                    maskChar={null}
+                >
+                    {(inputProps) => (
+                        <TextField
+                            {...inputProps}
+                            style={{ marginBottom: 10 }}
+                            fullWidth
+                            label="Expiry Date"
+                            variant="outlined"
+                        />
+                    )}
+                </InputMask>
 
             <TextField
                 // value={image}
