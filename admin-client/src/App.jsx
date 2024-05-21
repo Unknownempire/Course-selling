@@ -75,7 +75,7 @@ function App() {
                             <Route path={"/course/CloudComputing"} element={<CloudComputingContent />} />
                             {/* Test */}
                             <Route path={"/course/FrontendDev/Test"} element={<CourseTest />} />
-                            <Route path={"/course/CloudComputing"} element={<CourseTest />} />
+                            <Route path={"/course/CloudComputing/Test"} element={<CourseTest />} />
                             <Route path={"/course/BlockChainforBeginner/Test"} element={<CourseTest />} />
                             <Route path={"/course/Vue/Test"} element={<CourseTest />} />
                             {/* <Route path={"/course/CloudComputing"} element={<CourseTest />} /> */}
@@ -109,8 +109,8 @@ function InitUser() {
                 console.log('response = ', response.data);
                 setUser({
                     isLoading: false,
-                    userEmail: response.data.username,
                     userFullName: response.data.fullname,
+                    userEmail: response.data.username,
                 })
             } else {
                 setUser({
@@ -123,7 +123,8 @@ function InitUser() {
 
             setUser({
                 isLoading: false,
-                userEmail: null
+                userEmail: null,
+                userFullName: null,
             })
         }
     };
